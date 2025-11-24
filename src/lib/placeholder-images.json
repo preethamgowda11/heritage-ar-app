@@ -1,3 +1,118 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-image",
+      "description": "Hero image showing a collage of Indian heritage sites",
+      "imageUrl": "https://images.unsplash.com/photo-1623676632925-bff8c60b4dc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxJbmRpYW4lMjBoZXJpdGFnZXxlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Indian heritage"
+    },
+    {
+      "id": "taj-mahal-thumb",
+      "description": "Thumbnail for Taj Mahal",
+      "imageUrl": "https://images.unsplash.com/photo-1526711657229-e7e080ed7aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0YWolMjBtYWhhbHxlbnwwfHx8fDE3NjM4ODQ2NDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "taj mahal"
+    },
+    {
+      "id": "taj-mahal-cover",
+      "description": "Cover image for Taj Mahal",
+      "imageUrl": "https://images.unsplash.com/photo-1567255097545-018d2b9c414c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0YWolMjBtYWhhbCUyMGluZGlhfGVufDB8fHx8MTc2Mzk3MDI5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "taj mahal india"
+    },
+    {
+      "id": "hampi-thumb",
+      "description": "Thumbnail for Hampi",
+      "imageUrl": "https://images.unsplash.com/photo-1633942161781-6b59b979d763?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoYW1waSUyMHJ1aW5zfGVufDB8fHx8MTc2MzkwNzYzMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hampi ruins"
+    },
+    {
+      "id": "hampi-cover",
+      "description": "Cover image for Hampi",
+      "imageUrl": "https://images.unsplash.com/photo-1682410461978-6e393e2a9850?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYW1waSUyMGluZGlhfGVufDB8fHx8MTc2Mzk3MDI5OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hampi india"
+    },
+    {
+      "id": "qutub-minar-thumb",
+      "description": "Thumbnail for Qutub Minar",
+      "imageUrl": "https://images.unsplash.com/photo-1625771271992-87f4351c8121?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxxdXR1YiUyMG1pbmFyfGVufDB8fHx8MTc2Mzk3MDI5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "qutub minar"
+    },
+    {
+      "id": "qutub-minar-cover",
+      "description": "Cover image for Qutub Minar",
+      "imageUrl": "https://images.unsplash.com/photo-1667849521359-067272da8156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdXR1YiUyMG1pbmFyJTIwZGVsaGl8ZW58MHx8fHwxNzYzODkxODA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "qutub minar delhi"
+    },
+    {
+      "id": "konark-sun-temple-thumb",
+      "description": "Thumbnail for Konark Sun Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1642882567210-fe376fde0fec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8a29uYXJrJTIwdGVtcGxlfGVufDB8fHx8MTc2Mzk3MDI5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "konark temple"
+    },
+    {
+      "id": "konark-sun-temple-cover",
+      "description": "Cover image for Konark Sun Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1677211352662-30e7775c7ce8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxrb25hcmslMjBzdW4lMjB0ZW1wbGV8ZW58MHx8fHwxNzYzOTcwMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "konark sun temple"
+    },
+    {
+      "id": "ajanta-caves-thumb",
+      "description": "Thumbnail for Ajanta Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1671345642562-e9b4bdd91013?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhamFudGElMjBjYXZlc3xlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ajanta caves"
+    },
+    {
+      "id": "ajanta-caves-cover",
+      "description": "Cover image for Ajanta Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1709739323008-a4fc09491c2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhamFudGElMjBjYXZlcyUyMHBhaW50aW5nfGVufDB8fHx8MTc2Mzk3MDI5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ajanta caves painting"
+    },
+    {
+      "id": "dancing-girl-artifact",
+      "description": "Image of the Dancing Girl of Mohenjo-Daro artifact",
+      "imageUrl": "https://images.unsplash.com/photo-1753550577216-a572d3ebd5c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxicm9uemUlMjBzdGF0dWV0dGV8ZW58MHx8fHwxNzYzOTcwMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bronze statuette"
+    },
+    {
+      "id": "ashoka-pillar-artifact",
+      "description": "Image of the Ashoka Pillar artifact",
+      "imageUrl": "https://images.unsplash.com/photo-1640525040955-f715f28e4b27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdG9uZSUyMHBpbGxhcnxlbnwwfHx8fDE3NjM5NzAyOTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stone pillar"
+    },
+    {
+      "id": "chola-bronze-artifact",
+      "description": "Image of a Chola bronze artifact",
+      "imageUrl": "https://images.unsplash.com/photo-1622880838130-cce9f7080107?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxicm9uemUlMjBzY3VscHR1cmV8ZW58MHx8fHwxNzYzOTcwMjk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bronze sculpture"
+    },
+    {
+      "id": "fallback-360-taj",
+      "description": "360 fallback image for Taj Mahal",
+      "imageUrl": "https://images.unsplash.com/photo-1707405997487-557b33c87a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-hampi",
+      "description": "360 fallback image for Hampi",
+      "imageUrl": "https://images.unsplash.com/photo-1533002832-1721d16b4bb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-qutub",
+      "description": "360 fallback image for Qutub Minar",
+      "imageUrl": "https://images.unsplash.com/photo-1707405939120-77f2e1748907?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-konark",
+      "description": "360 fallback image for Konark Sun Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1707405878166-4874972e0796?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-ajanta",
+      "description": "360 fallback image for Ajanta Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1707405810598-c5226de2b527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8MzYwJTIwcGFub3JhbWF8ZW58MHx8fHwxNzYzOTcwMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    }
+  ]
 }
