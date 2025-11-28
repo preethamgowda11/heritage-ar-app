@@ -19,6 +19,14 @@ interface SiteCardProps {
 
 export function SiteCard({ site }: SiteCardProps) {
   const thumbnail = PlaceHolderImages.find(p => p.id === site.thumbnailUrlId);
+  const modelIdMap: { [key: string]: string } = {
+    'site-1': 'taj',
+    'site-2': 'hampi',
+    'site-3': 'qutub',
+    'site-4': 'konark',
+    'site-5': 'ajanta',
+  };
+  const modelId = modelIdMap[site.id];
 
   return (
     <Card className="flex flex-col overflow-hidden h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -47,12 +55,14 @@ export function SiteCard({ site }: SiteCardProps) {
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
-        <Button asChild size="sm">
-          <Link href={`/sites/${site.id}?ar=true`}>
-            Launch AR
-            <View className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
+        {modelId && (
+          <Button asChild size="sm">
+            <Link href={`/ar?id=${modelId}`}>
+              Launch AR
+              <View className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

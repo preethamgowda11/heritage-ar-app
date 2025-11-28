@@ -22,9 +22,28 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedSiteData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [showAR, setShowAR] = useState(launchAR);
+  
+  const modelIdMap: { [key: string]: string } = {
+    'site-1': 'taj',
+    'site-2': 'hampi',
+    'site-3': 'qutub',
+    'site-4': 'konark',
+    'site-5': 'ajanta',
+  };
+  const modelId = modelIdMap[site.id];
+
+  const [showAR, setShowAR] = useState(launchAR && !!modelId);
 
   useEffect(() => {
+    if (launchAR && modelId) {
+        window.location.href = `/ar?id=${modelId}`;
+    }
+  }, [launchAR, modelId]);
+
+
+  useEffect(() => {
+    if (launchAR) return;
+
     const processContent = async () => {
       setIsLoading(true);
       const input = {
@@ -51,7 +70,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
     };
 
     processContent();
-  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn]);
+  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR]);
 
   const coverImage = optimizedData?.coverImageUrl
     ? {
@@ -59,6 +78,15 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
         hint: PlaceHolderImages.find(p => p.imageUrl === optimizedData.coverImageUrl)?.imageHint || 'heritage site'
       }
     : null;
+
+  if (launchAR) {
+      return (
+        <div className="container text-center py-20">
+          <p>Redirecting to AR experience...</p>
+        </div>
+      );
+  }
+
 
   if (isLoading) {
     return <SiteDetailSkeleton />;
@@ -108,7 +136,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
 
       {!showAR && optimizedData.modelUrl && (
         <div className="text-center my-8">
-           <Button onClick={() => setShowAR(true)} size="lg">Launch AR Experience</Button>
+           <Button onClick={() => setShowAR(true)} size="lg">Show 3D Model</Button>
         </div>
       )}
       
