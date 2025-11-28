@@ -30,6 +30,10 @@ function ARContent() {
     'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
     'ellora-caves': '/models/ellora_caves__india.glb',
     'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
+    'lakshmi-narasimha': '/models/lakshmi_narasimha.glb',
+    'harihara': '/models/harihara_statue.glb',
+    'chhau-mask': '/models/chhau_mask.glb',
+    'konark-wheel': '/models/konark_wheel.glb'
   };
 
   const modelSrc = modelMap[id];
@@ -47,6 +51,10 @@ function ARContent() {
     'jagannath-puri': 'Jagannath Puri Temple',
     'ellora-caves': 'Ellora Caves',
     'sanchi-stupa': 'Sanchi Stupa',
+    'lakshmi-narasimha': 'Lakshmi Narasimha Statue',
+    'harihara': 'Harihara Statue',
+    'chhau-mask': 'Chhau Mask',
+    'konark-wheel': 'Konark Wheel'
   };
   
   const altText = altTextMap[id] || 'Heritage 3D Model';

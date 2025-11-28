@@ -115,22 +115,46 @@
       "imageHint": "sanchi stupa india"
     },
     {
-      "id": "dancing-girl-artifact",
-      "description": "Image of the Dancing Girl of Mohenjo-Daro artifact",
-      "imageUrl": "https://images.unsplash.com/photo-1753550577216-a572d3ebd5c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxicm9uemUlMjBzdGF0dWV0dGV8ZW58MHx8fHwxNzYzOTcwMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "bronze statuette"
+      "id": "mughal-painting-artifact",
+      "description": "Image of a Mughal Miniature Painting",
+      "imageUrl": "https://images.unsplash.com/photo-1628862198745-f0d55b0a33ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtdWdoYWwlMjBwYWludGluZ3xlbnwwfHx8fDE3NjQzMjE4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mughal painting"
     },
     {
-      "id": "ashoka-pillar-artifact",
-      "description": "Image of the Ashoka Pillar artifact",
-      "imageUrl": "https://images.unsplash.com/photo-1640525040955-f715f28e4b27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdG9uZSUyMHBpbGxhcnxlbnwwfHx8fDE3NjM5NzAyOTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "stone pillar"
+      "id": "vijayanagara-coin-artifact",
+      "description": "Image of a Vijayanagara Empire coin",
+      "imageUrl": "https://images.unsplash.com/photo-1580963321345-ff4a743c3d0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhbmNpZW50JTIwaW5kaWFuJTIwY29pbnxlbnwwfHx8fDE3NjQzMjE5NTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ancient coin"
     },
     {
-      "id": "chola-bronze-artifact",
-      "description": "Image of a Chola bronze artifact",
-      "imageUrl": "https://images.unsplash.com/photo-1622880838130-cce9f7080107?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxicm9uemUlMjBzY3VscHR1cmV8ZW58MHx8fHwxNzYzOTcwMjk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "bronze sculpture"
+      "id": "iron-pillar-artifact",
+      "description": "Image of the Iron Pillar of Delhi",
+      "imageUrl": "https://images.unsplash.com/photo-1667849521359-067272da8156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdXR1YiUyMG1pbmFyJTIwZGVsaGl8ZW58MHx8fHwxNzY0MzIyMDMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "iron pillar"
+    },
+    {
+      "id": "lakshmi-narasimha-artifact",
+      "description": "Image of the Lakshmi Narasimha statue in Hampi",
+      "imageUrl": "https://images.unsplash.com/photo-1617320491417-66442e133c94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsYWtzaG1pJTIwbmFyYXNpbWhhJTIwc3RhdHVlJTIwaGFtcGl8ZW58MHx8fHwxNzY0MzIyMDczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "narasimha statue"
+    },
+    {
+      "id": "harihara-artifact",
+      "description": "Image of a Harihara statue",
+      "imageUrl": "https://images.unsplash.com/photo-1665413150537-58c067e41d5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxoYXJpaGFyYSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjQzMjIxNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "harihara statue"
+    },
+    {
+      "id": "chhau-mask-artifact",
+      "description": "Image of a Chhau mask",
+      "imageUrl": "https://images.unsplash.com/photo-1707921992228-c11cad15054f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGhhdSUyMG1hc2t8ZW58MHx8fHwxNzY0MzIyMTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chhau mask"
+    },
+    {
+      "id": "konark-wheel-artifact",
+      "description": "Image of the Konark Sun Temple wheel",
+      "imageUrl": "https://images.unsplash.com/photo-1594916374092-25f0a273188e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxrb25hcmslMjB3aGVlbHxlbnwwfHx8fDE3NjQzMjIyMDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "konark wheel"
     },
     {
       "id": "fallback-360-taj",

@@ -8,7 +8,7 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
 
@@ -17,12 +17,33 @@ interface ArtifactDetailViewProps {
   launchAR: boolean;
 }
 
-export function ArtifactDetailView({ artifact, launchAR }: ArtifactDetailViewProps) {
+export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: ArtifactDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedArtifactData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const modelIdMap: { [key: string]: string } = {
+    'art-1': 'mughal-painting',
+    'art-2': 'vijayanagara-coin',
+    'art-3': 'iron-pillar',
+    'art-4': 'lakshmi-narasimha',
+    'art-5': 'harihara',
+    'art-6': 'chhau-mask',
+    'art-7': 'konark-wheel',
+  };
+  const modelId = modelIdMap[artifact.id];
+  const [launchAR, setLaunchAR] = useState(initialLaunchAR && !!modelId);
+
   useEffect(() => {
+    if (launchAR && modelId) {
+        window.location.href = `/ar?id=${modelId}`;
+    }
+  }, [launchAR, modelId]);
+
+
+  useEffect(() => {
+    if (launchAR) return;
+
     const processContent = async () => {
       setIsLoading(true);
       const input = {
@@ -46,7 +67,15 @@ export function ArtifactDetailView({ artifact, launchAR }: ArtifactDetailViewPro
     };
 
     processContent();
-  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn]);
+  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR]);
+
+  if (launchAR) {
+      return (
+        <div className="container text-center py-20">
+          <p>Redirecting to AR experience...</p>
+        </div>
+      );
+  }
 
   if (isLoading) {
     return <ArtifactDetailSkeleton />;
@@ -65,10 +94,16 @@ export function ArtifactDetailView({ artifact, launchAR }: ArtifactDetailViewPro
 
   return (
     <div className="container max-w-4xl mx-auto p-4 md:p-8">
-       <div className="mb-6">
+       <div className="mb-6 flex justify-between items-center">
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />Back to All Artifacts</Link>
         </Button>
+        {modelId && (
+            <Button onClick={() => setLaunchAR(true)} size="sm">
+                AR View
+                <View className="ml-2 h-4 w-4" />
+            </Button>
+        )}
       </div>
 
       <div className="mb-8">
@@ -91,7 +126,7 @@ export function ArtifactDetailView({ artifact, launchAR }: ArtifactDetailViewPro
         <div className="mt-8">
             <h3 className="text-2xl font-headline mb-4">Audio Description</h3>
             <Suspense fallback={<Skeleton className="h-20 w-full" />}>
-              <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={launchAR || (isAccessibilityOn && isAudioOn)} />
+              <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={initialLaunchAR || (isAccessibilityOn && isAudioOn)} />
             </Suspense>
         </div>
       )}

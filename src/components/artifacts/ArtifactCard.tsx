@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, View } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import type { Artifact } from '@/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -38,17 +38,11 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
       <CardContent className="p-4 flex-grow">
         <CardTitle className="font-headline text-lg">{artifact.title}</CardTitle>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between gap-2">
+      <CardFooter className="p-4 pt-0 flex justify-end">
          <Button asChild size="sm" variant="outline">
           <Link href={`/artifacts/${artifact.id}`}>
             Details
             <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-        <Button asChild size="sm">
-          <Link href={`/artifacts/${artifact.id}?ar=true`}>
-            AR View
-            <View className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>
