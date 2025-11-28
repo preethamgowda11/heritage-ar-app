@@ -129,13 +129,13 @@
     {
       "id": "iron-pillar-artifact",
       "description": "Image of the Iron Pillar of Delhi",
-      "imageUrl": "https://images.unsplash.com/photo-1667849521359-067272da8156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdXR1YiUyMG1pbmFyJTIwZGVsaGl8ZW58MHx8fHwxNzY0MzIyMDMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1667849521359-067272da8156?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdXR1YiUyMG1pbmFyJTIwaXJvbiUyMHBpbGxhcnxlbnwwfHx8fDE3NjQzOTI3NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "iron pillar"
     },
     {
       "id": "lakshmi-narasimha-artifact",
       "description": "Image of the Lakshmi Narasimha statue in Hampi",
-      "imageUrl": "https://images.unsplash.com/photo-1617320491417-66442e133c94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsYWtzaG1pJTIwbmFyYXNpbWhhJTIwc3RhdHVlJTIwaGFtcGl8ZW58MHx8fHwxNzY0MzIyMDczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617320491417-66442e133c94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsYWtzaG1pJTIwbmFyYXNpbWhhJTIwc3RhdHVlJTIwaGFtcGl8ZW58MHx8fHwxNzY0MzkyODIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "narasimha statue"
     },
     {

@@ -36,7 +36,7 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
-        <CardTitle className="font-headline text-lg">{artifact.title}</CardTitle>
+        <CardTitle className="font-headline text-lg line-clamp-2">{artifact.title}</CardTitle>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-end">
          <Button asChild size="sm" variant="outline">
