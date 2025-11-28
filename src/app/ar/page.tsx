@@ -1,13 +1,16 @@
 
 'use client';
 import React, { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ModelViewer } from '@/components/common/ModelViewer';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 function ARContent() {
   const params = useSearchParams();
   const id = params.get('id');
+  const router = useRouter();
 
   if (!id) {
     return <div className="text-white">No model specified.</div>;
@@ -53,17 +56,28 @@ function ARContent() {
   }
 
   return (
-    <ModelViewer
-        src={modelSrc}
-        alt={`AR view of ${altText}`}
-    />
+    <>
+        <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => router.back()}
+            className="absolute top-4 left-4 z-10 text-white hover:bg-white/20 hover:text-white"
+        >
+            <ArrowLeft className="h-6 w-6" />
+            <span className="sr-only">Go back</span>
+        </Button>
+        <ModelViewer
+            src={modelSrc}
+            alt={`AR view of ${altText}`}
+        />
+    </>
   );
 }
 
 
 export default function ARPage() {
   return (
-    <div className="h-screen bg-black flex items-center justify-center">
+    <div className="h-screen bg-black flex items-center justify-center relative">
        <Suspense fallback={<Skeleton className="h-full w-full bg-gray-800" />}>
         <ARContent />
        </Suspense>
