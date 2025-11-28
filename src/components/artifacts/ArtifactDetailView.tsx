@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
@@ -94,16 +95,10 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
 
   return (
     <div className="container max-w-4xl mx-auto p-4 md:p-8">
-       <div className="mb-6 flex justify-between items-center">
+       <div className="mb-6">
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />Back to All Artifacts</Link>
         </Button>
-        {modelId && (
-            <Button onClick={() => setLaunchAR(true)} size="sm">
-                AR View
-                <View className="ml-2 h-4 w-4" />
-            </Button>
-        )}
       </div>
 
       <div className="mb-8">
