@@ -15,11 +15,11 @@ function ARContent() {
 
   // Map IDs to actual model files
   const modelMap: { [key: string]: string } = {
-    'taj': '/models/taj_high.glb',
-    'qutub': '/models/qutub_high.glb',
-    'konark': '/models/konark_high.glb',
+    'taj': '/models/taj_mahal_3d_model.glb',
+    'qutub': '/models/qutub_minar.glb',
+    'konark': '/models/sun_temple.glb',
     'hampi': '/models/hampi_high.glb',
-    'ajanta': '/models/ajanta_low.glb', // Assuming low poly for caves for performance
+    'ajanta': '/models/ajanta_low.glb',
     'mughal-painting': '/models/mughal_painting.glb',
     'vijayanagara-coin': '/models/vijayanagara_coin.glb',
     'iron-pillar': '/models/iron_pillar_inscription.glb',
