@@ -28,7 +28,11 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
     'site-2': 'hampi',
     'site-3': 'qutub',
     'site-4': 'konark',
-    'site-5': 'ajanta',
+    'site-6': 'rani-ki-vav',
+    'site-7': 'charminar',
+    'site-8': 'jagannath-puri',
+    'site-9': 'ellora-caves',
+    'site-10': 'sanchi-stupa',
   };
   const modelId = modelIdMap[site.id];
 

@@ -19,10 +19,14 @@ function ARContent() {
     'qutub': '/models/qutub_minar.glb',
     'konark': '/models/sun_temple.glb',
     'hampi': '/models/hampi_high.glb',
-    'ajanta': '/models/ajanta_low.glb',
     'mughal-painting': '/models/mughal_painting.glb',
     'vijayanagara-coin': '/models/vijayanagara_coin.glb',
     'iron-pillar': '/models/iron_pillar_inscription.glb',
+    'rani-ki-vav': '/models/rani_ki_vav.glb',
+    'charminar': '/models/charminar.glb',
+    'jagannath-puri': '/models/jagannath_puri.glb',
+    'ellora-caves': '/models/ellora_caves.glb',
+    'sanchi-stupa': '/models/sanchi_stupa.glb',
   };
 
   const modelSrc = modelMap[id];
@@ -32,10 +36,14 @@ function ARContent() {
     'qutub': 'Qutub Minar',
     'konark': 'Konark Sun Temple',
     'hampi': 'Hampi',
-    'ajanta': 'Ajanta Caves',
     'mughal-painting': 'Mughal Miniature Painting',
     'vijayanagara-coin': 'Vijayanagara Coin',
     'iron-pillar': 'Iron Pillar Inscription',
+    'rani-ki-vav': 'Rani-ki-Vav',
+    'charminar': 'Charminar',
+    'jagannath-puri': 'Jagannath Puri Temple',
+    'ellora-caves': 'Ellora Caves',
+    'sanchi-stupa': 'Sanchi Stupa',
   };
   
   const altText = altTextMap[id] || 'Heritage 3D Model';

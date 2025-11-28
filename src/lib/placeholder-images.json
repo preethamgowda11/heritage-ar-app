@@ -55,16 +55,64 @@
       "imageHint": "konark sun temple"
     },
     {
-      "id": "ajanta-caves-thumb",
-      "description": "Thumbnail for Ajanta Caves",
-      "imageUrl": "https://images.unsplash.com/photo-1671345642562-e9b4bdd91013?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhamFudGElMjBjYXZlc3xlbnwwfHx8fDE3NjM5NzAyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ajanta caves"
+      "id": "rani-ki-vav-thumb",
+      "description": "Thumbnail for Rani-ki-Vav",
+      "imageUrl": "https://images.unsplash.com/photo-1677873500159-e3b3a6190184?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyYW5pLWtpLXZhdiUyMHN0ZXB3ZWxsfGVufDB8fHx8MTc2NDMxNzgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rani-ki-vav stepwell"
     },
     {
-      "id": "ajanta-caves-cover",
-      "description": "Cover image for Ajanta Caves",
-      "imageUrl": "https://images.unsplash.com/photo-1709739323008-a4fc09491c2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhamFudGElMjBjYXZlcyUyMHBhaW50aW5nfGVufDB8fHx8MTc2Mzk3MDI5OHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ajanta caves painting"
+      "id": "rani-ki-vav-cover",
+      "description": "Cover image for Rani-ki-Vav",
+      "imageUrl": "https://images.unsplash.com/photo-1700933401617-d03a143578d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyYW5pLWtpLXZhdiUyMGluZGlhfGVufDB8fHx8MTc2NDMxNzgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rani-ki-vav india"
+    },
+    {
+      "id": "charminar-thumb",
+      "description": "Thumbnail for Charminar",
+      "imageUrl": "https://images.unsplash.com/photo-1648644719956-2594a709a512?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGFybWluYXIlMjBoeWRlcmFiYWR8ZW58MHx8fHwxNzY0MzE3ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charminar hyderabad"
+    },
+    {
+      "id": "charminar-cover",
+      "description": "Cover image for Charminar",
+      "imageUrl": "https://images.unsplash.com/photo-1576906131787-4921116d8195?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaGFybWluYXIlMjBtb251bWVudHxlbnwwfHx8fDE3NjQzMTc4MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charminar monument"
+    },
+    {
+      "id": "jagannath-puri-thumb",
+      "description": "Thumbnail for Jagannath Puri Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1726220063675-1ac64be1d7d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxqYWdhbm5hdGglMjB0ZW1wbGV8ZW58MHx8fHwxNzY0MzE3ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "jagannath temple"
+    },
+    {
+      "id": "jagannath-puri-cover",
+      "description": "Cover image for Jagannath Puri Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1726220063393-c2b2a6d84cde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwdXJpJTIwdGVtcGxlfGVufDB8fHx8MTc2NDMxNzgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "puri temple"
+    },
+    {
+      "id": "ellora-caves-thumb",
+      "description": "Thumbnail for Ellora Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1701430662597-ff86c1cba95a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbGxvcmElMjBjYXZlc3xlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ellora caves"
+    },
+    {
+      "id": "ellora-caves-cover",
+      "description": "Cover image for Ellora Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1701430662597-ff86c1cba95a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxlbGxvcmElMjBjYXZlcyUyMG1haGFyYXNodHJhfGVufDB8fHx8MTc2NDMxNzgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ellora caves maharashtra"
+    },
+    {
+      "id": "sanchi-stupa-thumb",
+      "description": "Thumbnail for Sanchi Stupa",
+      "imageUrl": "https://images.unsplash.com/photo-1585744945554-5df801d2b680?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzYW5jaGklMjBzdHVwYXxlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sanchi stupa"
+    },
+    {
+      "id": "sanchi-stupa-cover",
+      "description": "Cover image for Sanchi Stupa",
+      "imageUrl": "https://images.unsplash.com/photo-1718908164450-d47abbeb8cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzYW5jaGklMjBzdHVwYSUyMGluZGlhfGVufDB8fHx8MTc2NDMxNzgyMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sanchi stupa india"
     },
     {
       "id": "dancing-girl-artifact",
@@ -109,9 +157,33 @@
       "imageHint": "360 panorama"
     },
     {
-      "id": "fallback-360-ajanta",
-      "description": "360 fallback image for Ajanta Caves",
-      "imageUrl": "https://images.unsplash.com/photo-1707405810598-c5226de2b527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8MzYwJTIwcGFub3JhbWF8ZW58MHx8fHwxNzYzOTcwMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "id": "fallback-360-rani-ki-vav",
+      "description": "360 fallback image for Rani-ki-Vav",
+      "imageUrl": "https://images.unsplash.com/photo-1707405997487-557b33c87a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-charminar",
+      "description": "360 fallback image for Charminar",
+      "imageUrl": "https://images.unsplash.com/photo-1530258614483-0185dc8d6632?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-jagannath-puri",
+      "description": "360 fallback image for Jagannath Puri Temple",
+      "imageUrl": "https://images.unsplash.com/photo-1707405939120-77f2e1748907?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-ellora-caves",
+      "description": "360 fallback image for Ellora Caves",
+      "imageUrl": "https://images.unsplash.com/photo-1707405810598-c5226de2b527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8MzYwJTIwcGFub3JhbWF8ZW58MHx8fHwxNzY0MzE3ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "360 panorama"
+    },
+    {
+      "id": "fallback-360-sanchi-stupa",
+      "description": "360 fallback image for Sanchi Stupa",
+      "imageUrl": "https://images.unsplash.com/photo-1530258614483-0185dc8d6632?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHwzNjAlMjBwYW5vcmFtYXxlbnwwfHx8fDE3NjQzMTc4MjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "360 panorama"
     }
   ]
