@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
@@ -12,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Gem } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 interface SiteDetailViewProps {
   site: Site;
