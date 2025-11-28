@@ -25,11 +25,11 @@ function ARContent() {
     'mughal-painting': '/models/mughal_painting.glb',
     'vijayanagara-coin': '/models/vijayanagara_coin.glb',
     'iron-pillar': '/models/iron_pillar_inscription.glb',
-    'rani-ki-vav': '/models/rani_ki_vav.glb',
-    'charminar': '/models/charminar.glb',
-    'jagannath-puri': '/models/jagannath_puri.glb',
-    'ellora-caves': '/models/ellora_caves.glb',
-    'sanchi-stupa': '/models/sanchi_stupa.glb',
+    'rani-ki-vav': '/models/rani-ki-vav.glb',
+    'charminar': '/models/charminar_hyderabad.glb',
+    'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
+    'ellora-caves': '/models/ellora_caves__india.glb',
+    'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
   };
 
   const modelSrc = modelMap[id];
