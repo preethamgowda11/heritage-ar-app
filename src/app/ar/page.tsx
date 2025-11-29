@@ -1,22 +1,16 @@
 
 'use client';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ModelViewer } from '@/components/common/ModelViewer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Camera } from 'lucide-react';
 
 function ARContent() {
   const params = useSearchParams();
   const id = params.get('id');
   const router = useRouter();
 
-  if (!id) {
-    return <div className="text-white">No model specified.</div>;
-  }
-
-  // Map IDs to actual model files
   const modelMap: { [key: string]: string } = {
     'taj': '/models/taj_mahal_3d_model.glb',
     'qutub': '/models/qutub_minar.glb',
@@ -36,49 +30,45 @@ function ARContent() {
     'konark-wheel': '/models/konark_wheel.glb'
   };
 
-  const modelSrc = modelMap[id];
-  
-  const altTextMap: { [key: string]: string } = {
-    'taj': 'Taj Mahal',
-    'qutub': 'Qutub Minar',
-    'konark': 'Konark Sun Temple',
-    'hampi': 'Hampi',
-    'mughal-painting': 'Mughal Miniature Painting',
-    'vijayanagara-coin': 'Vijayanagara Coin',
-    'iron-pillar': 'Iron Pillar Inscription',
-    'rani-ki-vav': 'Rani-ki-Vav',
-    'charminar': 'Charminar',
-    'jagannath-puri': 'Jagannath Puri Temple',
-    'ellora-caves': 'Ellora Caves',
-    'sanchi-stupa': 'Sanchi Stupa',
-    'lakshmi-narasimha': 'Lakshmi Narasimha Statue',
-    'harihara': 'Harihara Statue',
-    'chhau-mask': 'Chhau Mask',
-    'konark-wheel': 'Konark Wheel'
-  };
-  
-  const altText = altTextMap[id] || 'Heritage 3D Model';
+  const modelSrc = id ? modelMap[id] : null;
+
+  useEffect(() => {
+    if (modelSrc) {
+      const modelUrl = `${window.location.origin}${modelSrc}`;
+      const fallbackUrl = `${window.location.origin}/sites`;
+      const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${modelUrl}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackUrl};end;`;
+      
+      const anchor = document.createElement('a');
+      anchor.href = sceneViewerUrl;
+      anchor.click();
+
+      // Give it a moment to launch, then navigate back as a fallback
+      setTimeout(() => {
+          router.back();
+      }, 1000);
+
+    }
+  }, [modelSrc, router]);
 
   if (!modelSrc) {
-    return <div className="text-white">Model not found for ID: {id}</div>;
+    return (
+        <div className="text-white text-center">
+            <p>Model not found.</p>
+            <Button variant="link" onClick={() => router.back()} className="text-white">Go Back</Button>
+        </div>
+    );
   }
 
   return (
-    <>
-        <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => router.back()}
-            className="absolute top-4 left-4 z-10 text-white hover:bg-white/20 hover:text-white"
-        >
-            <ArrowLeft className="h-6 w-6" />
-            <span className="sr-only">Go back</span>
+    <div className="text-white text-center p-8">
+        <Camera className="h-16 w-16 mx-auto mb-4 animate-pulse" />
+        <h2 className="text-2xl font-bold">Launching AR Experience...</h2>
+        <p className="mt-2 text-lg">Your device should be opening the 3D model now.</p>
+        <p className="mt-1 text-sm text-gray-400">If nothing happens, your device may not support this feature.</p>
+        <Button variant="outline" onClick={() => router.back()} className="mt-8 text-foreground">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
         </Button>
-        <ModelViewer
-            src={modelSrc}
-            alt={`AR view of ${altText}`}
-        />
-    </>
+    </div>
   );
 }
 
