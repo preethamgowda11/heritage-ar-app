@@ -7,10 +7,13 @@ import { Logo } from './Logo';
 import { AccessibilityPanel } from './AccessibilityPanel';
 import { SettingsPanel } from './SettingsPanel';
 import { useState } from 'react';
+import { useTranslation } from '@/hooks/use-translation';
+
 
 export function Header() {
   const [isAccessibilityOpen, setAccessibilityOpen] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -19,14 +22,14 @@ export function Header() {
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Logo />
             <span className="hidden font-bold sm:inline-block font-headline text-lg">
-              Heritage Lens
+              {t('heritage_lens')}
             </span>
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-2">
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Toggle Accessibility Panel"
+              aria-label={t('accessibility')}
               onClick={() => setAccessibilityOpen(true)}
             >
               <Accessibility className="h-5 w-5" />
@@ -34,7 +37,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Toggle Settings Panel"
+              aria-label={t('settings')}
               onClick={() => setSettingsOpen(true)}
             >
               <Settings className="h-5 w-5" />

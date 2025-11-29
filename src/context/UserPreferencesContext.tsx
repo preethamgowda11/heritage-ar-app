@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import type { UserPreferences } from '@/types';
+import type { UserPreferences, Language } from '@/types';
 
 interface UserPreferencesContextType extends UserPreferences {
   setIsLowBandwidth: (value: boolean) => void;
@@ -9,6 +9,7 @@ interface UserPreferencesContextType extends UserPreferences {
   setIsAudioOn: (value: boolean) => void;
   setTheme: (theme: 'light' | 'dark' | 'system') => void;
   setFontSize: (size: number) => void;
+  setLanguage: (language: Language) => void;
 }
 
 const defaultPreferences: UserPreferences = {
@@ -17,6 +18,7 @@ const defaultPreferences: UserPreferences = {
   isAudioOn: false,
   theme: 'system',
   fontSize: 16,
+  language: 'en',
 };
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -75,6 +77,10 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
     savePreferences({ ...prefs, fontSize: size });
   };
 
+  const setLanguage = (language: Language) => {
+    savePreferences({ ...prefs, language });
+  }
+
   const setIsLowBandwidth = (value: boolean) => savePreferences({ ...prefs, isLowBandwidth: value });
   const setIsAccessibilityOn = (value: boolean) => savePreferences({ ...prefs, isAccessibilityOn: value });
   const setIsAudioOn = (value: boolean) => savePreferences({ ...prefs, isAudioOn: value });
@@ -89,6 +95,7 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
         ...prefs,
         setTheme,
         setFontSize,
+        setLanguage,
         setIsLowBandwidth,
         setIsAccessibilityOn,
         setIsAudioOn,

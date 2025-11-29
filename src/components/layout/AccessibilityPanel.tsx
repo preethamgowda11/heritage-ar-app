@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface AccessibilityPanelProps {
   open: boolean;
@@ -28,20 +29,21 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
     theme,
     setTheme
   } = useUserPreferences();
+  const { t } = useTranslation();
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Accessibility</SheetTitle>
+          <SheetTitle>{t('accessibility')}</SheetTitle>
           <SheetDescription>
-            Customize your experience for your needs.
+            {t('customize_experience')}
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-6 py-6">
           <div className="flex items-center justify-between">
             <Label htmlFor="accessibility-mode" className="text-base">
-              Enable Accessibility Mode
+              {t('enable_accessibility_mode')}
             </Label>
             <Switch
               id="accessibility-mode"
@@ -51,7 +53,7 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
           </div>
           <div className="flex items-center justify-between">
             <Label htmlFor="audio-narration" className="text-base">
-              Audio Narration
+              {t('audio_narration')}
             </Label>
             <Switch
               id="audio-narration"
@@ -62,7 +64,7 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
           </div>
           <div className="space-y-3">
             <Label htmlFor="font-size" className="text-base">
-              Font Size: {Math.round((fontSize / 16) * 100)}%
+              {t('font_size')}: {Math.round((fontSize / 16) * 100)}%
             </Label>
             <Slider
               id="font-size"
@@ -75,7 +77,7 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
           </div>
           <div className="flex items-center justify-between">
             <Label htmlFor="contrast-mode" className="text-base">
-               High Contrast Mode
+               {t('high_contrast_mode')}
             </Label>
             <Switch
               id="contrast-mode"

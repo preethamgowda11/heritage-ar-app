@@ -1,3 +1,5 @@
+export type Language = 'en' | 'hi' | 'kn';
+
 export interface Site {
   id: string;
   title: string;
@@ -29,4 +31,5 @@ export interface UserPreferences {
   isAudioOn: boolean;
   theme: 'light' | 'dark' | 'system';
   fontSize: number;
+  language: Language;
 }

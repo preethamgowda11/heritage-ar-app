@@ -12,12 +12,15 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, View } from 'lucide-react';
 import type { Site } from '@/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useTranslation } from '@/hooks/use-translation';
+
 
 interface SiteCardProps {
   site: Site;
 }
 
 export function SiteCard({ site }: SiteCardProps) {
+  const { t } = useTranslation();
   const thumbnail = PlaceHolderImages.find(p => p.id === site.thumbnailUrlId);
   const modelIdMap: { [key: string]: string } = {
     'site-1': 'taj',
@@ -55,14 +58,14 @@ export function SiteCard({ site }: SiteCardProps) {
       <CardFooter className="p-4 pt-0 flex justify-between gap-2">
         <Button asChild size="sm" variant="outline">
           <Link href={`/sites/${site.id}`}>
-            Details
+            {t('details')}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
         {modelId && (
           <Button asChild size="sm">
             <Link href={`/ar?id=${modelId}`}>
-              Launch AR
+              {t('launch_ar')}
               <View className="ml-2 h-4 w-4" />
             </Link>
           </Button>

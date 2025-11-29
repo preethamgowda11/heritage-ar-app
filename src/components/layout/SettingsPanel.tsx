@@ -17,6 +17,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
+import { useTranslation } from '@/hooks/use-translation';
+import type { Language } from '@/types';
+
 
 interface SettingsPanelProps {
   open: boolean;
@@ -24,21 +27,22 @@ interface SettingsPanelProps {
 }
 
 export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
-  const { isLowBandwidth, setIsLowBandwidth } = useUserPreferences();
+  const { isLowBandwidth, setIsLowBandwidth, language, setLanguage } = useUserPreferences();
+  const { t } = useTranslation();
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Settings</SheetTitle>
+          <SheetTitle>{t('settings')}</SheetTitle>
           <SheetDescription>
-            Adjust your app preferences.
+            {t('adjust_preferences')}
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-6 py-6">
           <div className="flex items-center justify-between">
             <Label htmlFor="low-bandwidth-mode" className="text-base">
-              Low Bandwidth Mode
+              {t('low_bandwidth_mode')}
             </Label>
             <Switch
               id="low-bandwidth-mode"
@@ -48,15 +52,16 @@ export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="language" className="text-base">
-              Language
+              {t('language')}
             </Label>
-            <Select defaultValue="english">
+            <Select value={language} onValueChange={(value) => setLanguage(value as Language)}>
               <SelectTrigger id="language" className="w-full">
-                <SelectValue placeholder="Select language" />
+                <SelectValue placeholder={t('select_language')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="english">English</SelectItem>
-                <SelectItem value="hindi">Hindi</SelectItem>
+                <SelectItem value="en">{t('english')}</SelectItem>
+                <SelectItem value="hi">{t('hindi')}</SelectItem>
+                <SelectItem value="kn">{t('kannada')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

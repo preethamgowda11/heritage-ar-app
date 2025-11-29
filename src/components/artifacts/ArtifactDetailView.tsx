@@ -13,6 +13,8 @@ import { ArrowLeft } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
+import { useTranslation } from '@/hooks/use-translation';
+
 
 interface ArtifactDetailViewProps {
   artifact: Artifact;
@@ -23,6 +25,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedArtifactData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   const modelIdMap: { [key: string]: string } = {
     'art-1': 'mughal-painting',
@@ -88,7 +91,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
       <div className="container text-center py-20">
         <p>Could not load artifact details.</p>
         <Button asChild variant="link" className="mt-4">
-            <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />Back to Artifacts</Link>
+            <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
       </div>
     );
@@ -98,7 +101,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
     <div className="container max-w-4xl mx-auto p-4 md:p-8">
        <div className="mb-6">
         <Button asChild variant="outline" size="sm">
-            <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />Back to All Artifacts</Link>
+            <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
       </div>
 
@@ -124,7 +127,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
 
       {optimizedData.audioNarrationUrl && (
         <div className="mt-8">
-            <h3 className="text-2xl font-headline mb-4">Audio Description</h3>
+            <h3 className="text-2xl font-headline mb-4">{t('audio_description')}</h3>
             <Suspense fallback={<Skeleton className="h-20 w-full" />}>
               <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={initialLaunchAR || (isAccessibilityOn && isAudioOn)} />
             </Suspense>

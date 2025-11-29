@@ -15,6 +15,7 @@ import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface SiteDetailViewProps {
   site: Site;
@@ -25,6 +26,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedSiteData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
   
   const modelIdMap: { [key: string]: string } = {
     'site-1': 'taj',
@@ -104,7 +106,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
       <div className="container text-center py-20">
         <p>Could not load site details.</p>
         <Button asChild variant="link" className="mt-4">
-            <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />Back to Sites</Link>
+            <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
       </div>
     );
@@ -114,14 +116,14 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
       <div className="mb-6">
         <Button asChild variant="outline" size="sm">
-            <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />Back to All Sites</Link>
+            <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
       </div>
       
       {showAR && optimizedData.modelUrl ? (
         <div className="mb-8">
           <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={site.coverImageUrlId} />
-          <Button onClick={() => setShowAR(false)} className="mt-4 w-full">Show Details</Button>
+          <Button onClick={() => setShowAR(false)} className="mt-4 w-full">{t('show_details')}</Button>
         </div>
       ) : (
         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg">
@@ -148,13 +150,13 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
 
       {!showAR && optimizedData.modelUrl && (
         <div className="text-center my-8">
-           <Button onClick={() => setShowAR(true)} size="lg">Show 3D Model</Button>
+           <Button onClick={() => setShowAR(true)} size="lg">{t('show_3d_model')}</Button>
         </div>
       )}
       
       {optimizedData.audioNarrationUrl && (
         <div className="mt-8">
-            <h3 className="text-2xl font-headline mb-4">Historical Narration</h3>
+            <h3 className="text-2xl font-headline mb-4">{t('historical_narration')}</h3>
             <Suspense fallback={<Skeleton className="h-20 w-full" />}>
               <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={isAccessibilityOn && isAudioOn} />
             </Suspense>
@@ -163,7 +165,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
 
       {site.artifacts.length > 0 && (
         <div className="mt-12">
-            <h3 className="text-2xl font-headline mb-4 text-center">Related Artifacts</h3>
+            <h3 className="text-2xl font-headline mb-4 text-center">{t('related_artifacts')}</h3>
              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {site.artifacts.map(artifact => (
                     <Link key={artifact.id} href={`/artifacts/${artifact.id}`} className="group block">

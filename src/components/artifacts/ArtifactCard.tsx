@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import type { Artifact } from '@/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface ArtifactCardProps {
   artifact: Artifact;
@@ -18,6 +19,7 @@ interface ArtifactCardProps {
 
 export function ArtifactCard({ artifact }: ArtifactCardProps) {
   const image = PlaceHolderImages.find(p => p.id === artifact.imageUrlId);
+  const { t } = useTranslation();
 
   return (
     <Card className="flex flex-col overflow-hidden h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -41,7 +43,7 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
       <CardFooter className="p-4 pt-0 flex justify-end">
          <Button asChild size="sm" variant="outline">
           <Link href={`/artifacts/${artifact.id}`}>
-            Details
+            {t('details')}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>

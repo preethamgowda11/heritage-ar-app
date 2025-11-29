@@ -4,6 +4,8 @@
 import { Play, Pause, Square, Volume2, Loader } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/hooks/use-translation';
+
 
 interface SpeechSynthesisPlayerProps {
   text: string;
@@ -15,6 +17,7 @@ export function SpeechSynthesisPlayer({ text }: SpeechSynthesisPlayerProps) {
   const [isSupported, setIsSupported] = useState(false);
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -143,7 +146,7 @@ export function SpeechSynthesisPlayer({ text }: SpeechSynthesisPlayerProps) {
   return (
      <Button onClick={handlePlay} variant="outline" disabled={!text}>
        <Volume2 className="w-5 h-5 mr-2" />
-       Read description aloud
+       {t('read_description_aloud')}
     </Button>
   );
 }
