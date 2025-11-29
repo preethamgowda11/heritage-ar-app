@@ -38,14 +38,7 @@ function ARContent() {
       const fallbackUrl = `${window.location.origin}/sites`;
       const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${modelUrl}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackUrl};end;`;
       
-      const anchor = document.createElement('a');
-      anchor.href = sceneViewerUrl;
-      anchor.click();
-
-      // Give it a moment to launch, then navigate back as a fallback
-      setTimeout(() => {
-          router.back();
-      }, 1000);
+      window.location.href = sceneViewerUrl;
 
     }
   }, [modelSrc, router]);
