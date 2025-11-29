@@ -9,9 +9,10 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, View } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
+import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 
 interface ArtifactDetailViewProps {
   artifact: Artifact;
@@ -113,9 +114,13 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{optimizedData.title}</h1>
       </header>
       
-      <article className="prose prose-lg max-w-none mx-auto text-foreground/90">
+      <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
         <p>{optimizedData.description}</p>
       </article>
+
+      <div className="my-6">
+        <SpeechSynthesisPlayer text={optimizedData.description || ''} />
+      </div>
 
       {optimizedData.audioNarrationUrl && (
         <div className="mt-8">

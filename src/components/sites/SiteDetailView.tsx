@@ -14,6 +14,7 @@ import { ArrowLeft, Gem } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 
 interface SiteDetailViewProps {
   site: Site;
@@ -136,9 +137,14 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{optimizedData.title}</h1>
       </header>
       
-      <article className="prose prose-lg max-w-none mx-auto text-foreground/90">
+      <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
         <p>{optimizedData.longDescription}</p>
       </article>
+
+      <div className="my-6">
+        <SpeechSynthesisPlayer text={optimizedData.longDescription || ''} />
+      </div>
+
 
       {!showAR && optimizedData.modelUrl && (
         <div className="text-center my-8">
