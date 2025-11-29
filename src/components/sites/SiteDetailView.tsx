@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Gem } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -26,7 +26,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedSiteData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   const modelIdMap: { [key: string]: string } = {
     'site-1': 'taj',
@@ -57,9 +57,9 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
       setIsLoading(true);
       const input = {
         siteData: {
-          title: site.title,
-          shortDescription: site.shortDescription,
-          longDescription: site.longDescription,
+          title: site.title[language],
+          shortDescription: site.shortDescription[language],
+          longDescription: site.longDescription[language],
           thumbnailUrl: PlaceHolderImages.find(p => p.id === site.thumbnailUrlId)?.imageUrl,
           coverImageUrl: PlaceHolderImages.find(p => p.id === site.coverImageUrlId)?.imageUrl,
           lowPolyModelUrl: site.lowPolyModelUrl,
@@ -79,7 +79,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
     };
 
     processContent();
-  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR]);
+  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR, language]);
 
   const coverImage = optimizedData?.coverImageUrl
     ? {
@@ -174,7 +174,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
                                 <div className="relative aspect-square">
                                     <Image 
                                         src={PlaceHolderImages.find(p => p.id === artifact.imageUrlId)?.imageUrl || ''} 
-                                        alt={artifact.title}
+                                        alt={artifact.title.en}
                                         fill
                                         className="object-cover"
                                         sizes="50vw"
@@ -182,7 +182,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
                                 </div>
                             </CardHeader>
                             <CardContent className="p-3">
-                                <p className="text-sm font-semibold truncate">{artifact.title}</p>
+                                <p className="text-sm font-semibold truncate">{artifact.title[language]}</p>
                             </CardContent>
                         </Card>
                     </Link>

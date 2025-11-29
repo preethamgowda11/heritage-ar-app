@@ -25,7 +25,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedArtifactData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const modelIdMap: { [key: string]: string } = {
     'art-1': 'mughal-painting',
@@ -53,8 +53,8 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
       setIsLoading(true);
       const input = {
         artifactData: {
-          title: artifact.title,
-          description: artifact.description,
+          title: artifact.title[language],
+          description: artifact.description[language],
           imageUrl: PlaceHolderImages.find(p => p.id === artifact.imageUrlId)?.imageUrl,
           modelFileUrl: artifact.modelFileUrl,
           fallbackImageUrl: PlaceHolderImages.find(p => p.id === artifact.fallbackImageUrlId)?.imageUrl,
@@ -72,7 +72,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
     };
 
     processContent();
-  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR]);
+  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR, language]);
 
   if (launchAR) {
       return (

@@ -20,7 +20,7 @@ interface SiteCardProps {
 }
 
 export function SiteCard({ site }: SiteCardProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const thumbnail = PlaceHolderImages.find(p => p.id === site.thumbnailUrlId);
   const modelIdMap: { [key: string]: string } = {
     'site-1': 'taj',
@@ -42,7 +42,7 @@ export function SiteCard({ site }: SiteCardProps) {
           {thumbnail && (
             <Image
               src={thumbnail.imageUrl}
-              alt={`Thumbnail for ${site.title}`}
+              alt={`Thumbnail for ${site.title.en}`}
               fill
               className="object-cover"
               data-ai-hint={thumbnail.imageHint}
@@ -52,8 +52,8 @@ export function SiteCard({ site }: SiteCardProps) {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
-        <CardTitle className="font-headline text-xl mb-2">{site.title}</CardTitle>
-        <CardDescription>{site.shortDescription}</CardDescription>
+        <CardTitle className="font-headline text-xl mb-2">{site.title[language]}</CardTitle>
+        <CardDescription>{site.shortDescription[language]}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between gap-2">
         <Button asChild size="sm" variant="outline">

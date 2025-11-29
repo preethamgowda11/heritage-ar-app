@@ -2,9 +2,9 @@ export type Language = 'en' | 'hi' | 'kn';
 
 export interface Site {
   id: string;
-  title: string;
-  shortDescription: string;
-  longDescription: string;
+  title: Record<Language, string>;
+  shortDescription: Record<Language, string>;
+  longDescription: Record<Language, string>;
   thumbnailUrlId: string;
   coverImageUrlId: string;
   lowPolyModelUrl: string;
@@ -17,8 +17,8 @@ export interface Site {
 export interface Artifact {
   id: string;
   siteId: string;
-  title: string;
-  description: string;
+  title: Record<Language, string>;
+  description: Record<Language, string>;
   imageUrlId: string;
   modelFileUrl: string;
   fallbackImageUrlId: string;

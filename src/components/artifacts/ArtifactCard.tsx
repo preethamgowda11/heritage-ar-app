@@ -19,7 +19,7 @@ interface ArtifactCardProps {
 
 export function ArtifactCard({ artifact }: ArtifactCardProps) {
   const image = PlaceHolderImages.find(p => p.id === artifact.imageUrlId);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   return (
     <Card className="flex flex-col overflow-hidden h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -28,7 +28,7 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
           {image && (
             <Image
               src={image.imageUrl}
-              alt={`Image of ${artifact.title}`}
+              alt={`Image of ${artifact.title.en}`}
               fill
               className="object-cover"
               data-ai-hint={image.imageHint}
@@ -38,7 +38,7 @@ export function ArtifactCard({ artifact }: ArtifactCardProps) {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
-        <CardTitle className="font-headline text-lg line-clamp-2">{artifact.title}</CardTitle>
+        <CardTitle className="font-headline text-lg line-clamp-2">{artifact.title[language]}</CardTitle>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-end">
          <Button asChild size="sm" variant="outline">
