@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Camera } from 'lucide-react';
+import Link from 'next/link';
 
 function ARContent() {
   const params = useSearchParams();
@@ -33,21 +34,18 @@ function ARContent() {
   const modelSrc = id ? modelMap[id] : null;
 
   useEffect(() => {
-    if (modelSrc) {
-      const modelUrl = `${window.location.origin}${modelSrc}`;
-      const fallbackUrl = `${window.location.origin}/sites`;
-      const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${modelUrl}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackUrl};end;`;
-      
-      window.location.href = sceneViewerUrl;
-
+    // This page is now a fallback. The main AR experience is in /ar-view/
+    // We redirect if a model ID is present, just in case old links are used.
+    if (id) {
+      router.replace(`/ar-view/index.html?modelId=${id}`);
     }
-  }, [modelSrc, router]);
+  }, [id, router]);
 
-  if (!modelSrc) {
+  if (id) {
     return (
-        <div className="text-white text-center">
-            <p>Model not found.</p>
-            <Button variant="link" onClick={() => router.back()} className="text-white">Go Back</Button>
+        <div className="text-white text-center p-8">
+            <h2 className="text-2xl font-bold">Redirecting to AR Viewer...</h2>
+            <p className="mt-2 text-lg">Please wait a moment.</p>
         </div>
     );
   }
@@ -55,11 +53,12 @@ function ARContent() {
   return (
     <div className="text-white text-center p-8">
         <Camera className="h-16 w-16 mx-auto mb-4 animate-pulse" />
-        <h2 className="text-2xl font-bold">Launching AR Experience...</h2>
-        <p className="mt-2 text-lg">Your device should be opening the 3D model now.</p>
-        <p className="mt-1 text-sm text-gray-400">If nothing happens, your device may not support this feature.</p>
-        <Button variant="outline" onClick={() => router.back()} className="mt-8 text-foreground">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
+        <h2 className="text-2xl font-bold">No Model Selected</h2>
+        <p className="mt-2 text-lg">Please select a heritage site or artifact to view in AR.</p>
+        <Button asChild variant="outline" className="mt-8 text-foreground">
+            <Link href="/sites">
+                <ArrowLeft className="mr-2 h-4 w-4" /> Go to Sites
+            </Link>
         </Button>
     </div>
   );

@@ -64,7 +64,7 @@ export function SiteCard({ site }: SiteCardProps) {
         </Button>
         {modelId && (
           <Button asChild size="sm">
-            <Link href={`/ar?id=${modelId}`}>
+            <Link href={`/ar-view/index.html?modelId=${modelId}`}>
               {t('launch_ar')}
               <View className="ml-2 h-4 w-4" />
             </Link>

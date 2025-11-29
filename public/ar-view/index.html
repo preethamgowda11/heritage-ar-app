@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Lens - AR View</title>
+    <link rel="stylesheet" href="ar-style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.163.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="ar-unsupported" style="display: none;">
+        <h1>AR Not Supported</h1>
+        <p>Your device or browser does not support the required WebXR features for this AR experience.</p>
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <div id="ar-container">
+        <div id="loader">Loading 3D Model...</div>
+        <div id="interaction-prompt" style="display: none;">Tap to place the model</div>
+        
+        <div id="bottom-panel">
+            <h2 id="model-title"></h2>
+            <p id="model-description"></p>
+            <div id="tts-controls">
+                <button id="play-tts">Play</button>
+                <button id="pause-tts">Pause</button>
+                <button id="stop-tts">Stop</button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="ar-app.js"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Gem } from 'lucide-react';
+import { ArrowLeft, Gem, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -45,7 +45,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
 
   useEffect(() => {
     if (launchAR && modelId) {
-        window.location.href = `/ar?id=${modelId}`;
+        window.location.href = `/ar-view/index.html?modelId=${modelId}`;
     }
   }, [launchAR, modelId]);
 
@@ -114,10 +114,18 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
 
   return (
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
-      <div className="mb-6">
+      <div className="mb-6 flex justify-between items-center">
         <Button asChild variant="outline" size="sm">
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
+        {modelId && (
+            <Button asChild>
+                <Link href={`/ar-view/index.html?modelId=${modelId}`}>
+                    <View className="mr-2 h-4 w-4" />
+                    {t('launch_ar')}
+                </Link>
+            </Button>
+        )}
       </div>
       
       {showAR && optimizedData.modelUrl ? (
