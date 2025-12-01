@@ -12,27 +12,6 @@ function ARContent() {
   const id = params.get('id');
   const router = useRouter();
 
-  const modelMap: { [key: string]: string } = {
-    'taj': '/models/taj_mahal_3d_model.glb',
-    'qutub': '/models/qutub_minar.glb',
-    'konark': '/models/sun_temple.glb',
-    'hampi': '/models/hampi_high.glb',
-    'mughal-painting': '/models/mughal_painting.glb',
-    'vijayanagara-coin': '/models/vijayanagara_coin.glb',
-    'iron-pillar': '/models/iron_pillar_inscription.glb',
-    'rani-ki-vav': '/models/rani-ki-vav.glb',
-    'charminar': '/models/charminar_hyderabad.glb',
-    'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
-    'ellora-caves': '/models/ellora_caves__india.glb',
-    'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
-    'lakshmi-narasimha': '/models/lakshmi_narasimha.glb',
-    'harihara': '/models/harihara_statue.glb',
-    'chhau-mask': '/models/chhau_mask.glb',
-    'konark-wheel': '/models/konark_wheel.glb'
-  };
-
-  const modelSrc = id ? modelMap[id] : null;
-
   useEffect(() => {
     // This page is now a fallback. The main AR experience is in /ar-view/
     // We redirect if a model ID is present, just in case old links are used.

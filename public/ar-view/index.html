@@ -1,41 +1,295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heritage Lens - AR View</title>
-    <link rel="stylesheet" href="ar-style.css">
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.163.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
-            }
-        }
-    </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AR Viewer — WebXR</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  <style>
+    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:Inter,Roboto,Arial}
+    #ar-root{position:fixed;inset:0;background:transparent}
+    #status{position:fixed;left:50%;top:18px;transform:translateX(-50%);padding:8px 12px;border-radius:8px;background:rgba(0,0,0,0.6);z-index:60}
+    #placeBtn{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);padding:12px 18px;font-size:16px;border-radius:8px;background:#0b5fff;color:#fff;border:none;z-index:60;display:none}
+    .panel{position:fixed;left:0;right:0;bottom:0;background:rgba(3,7,18,0.78);display:flex;align-items:center;justify-content:space-between;padding:10px;gap:12px;z-index:40}
+    .title{font-weight:700;font-size:16px}
+    .desc{font-size:13px;opacity:.9;max-height:44px;overflow:hidden;text-overflow:ellipsis;width:60vw}
+    button{cursor:pointer;background:rgba(255,255,255,0.08);border:0;color:#fff;padding:8px;border-radius:8px}
+  </style>
 </head>
 <body>
-    <div id="ar-unsupported" style="display: none;">
-        <h1>AR Not Supported</h1>
-        <p>Your device or browser does not support the required WebXR features for this AR experience.</p>
-        <a href="/" class="back-button">Back to Home</a>
-    </div>
+  <div id="ar-root"></div>
 
-    <div id="ar-container">
-        <div id="loader">Loading 3D Model...</div>
-        <div id="interaction-prompt" style="display: none;">Tap to place the model</div>
-        
-        <div id="bottom-panel">
-            <h2 id="model-title"></h2>
-            <p id="model-description"></p>
-            <div id="tts-controls">
-                <button id="play-tts">Play</button>
-                <button id="pause-tts">Pause</button>
-                <button id="stop-tts">Stop</button>
-            </div>
-        </div>
+  <div id="status">Ready — tap AR to begin</div>
+  <button id="placeBtn">Tap to place</button>
+
+  <div class="panel" id="infoPanel">
+    <div>
+      <div id="siteTitle" class="title">Title</div>
+      <div id="siteDesc" class="desc">Description</div>
     </div>
+    <div>
+      <button id="btnPlay">▶</button>
+      <button id="btnPause">⏸</button>
+      <button id="btnReset">Reset</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.156.0/build/three.module.js';
+    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/loaders/GLTFLoader.js';
+    import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/webxr/ARButton.js';
+
+    // helpers
+    const statusEl = document.getElementById('status');
+    const placeBtn = document.getElementById('placeBtn');
+    const titleEl = document.getElementById('siteTitle');
+    const descEl = document.getElementById('siteDesc');
+    const btnPlay = document.getElementById('btnPlay');
+    const btnPause = document.getElementById('btnPause');
+    const btnReset = document.getElementById('btnReset');
+
+    function setStatus(t){ statusEl.innerText = t; }
+
+    const modelMap = {
+      'taj': '/models/taj_mahal_3d_model.glb',
+      'qutub': '/models/qutub_minar.glb',
+      'konark': '/models/sun_temple.glb',
+      'hampi': '/models/hampi_high.glb',
+      'mughal-painting': '/models/mughal_painting.glb',
+      'vijayanagara-coin': '/models/vijayanagara_coin.glb',
+      'iron-pillar': '/models/iron_pillar_inscription.glb',
+      'rani-ki-vav': '/models/rani-ki-vav.glb',
+      'charminar': '/models/charminar_hyderabad.glb',
+      'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
+      'ellora-caves': '/models/ellora_caves__india.glb',
+      'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
+      'lakshmi-narasimha': '/models/lakshmi_narasimha.glb',
+      'harihara': '/models/harihara_statue.glb',
+      'chhau-mask': '/models/chhau_mask.glb',
+      'konark-wheel': '/models/konark_wheel.glb'
+    };
+
+    // restore preserved text (the SiteDetail saved these before redirect)
+    const preservedTitle = sessionStorage.getItem('ar_title') || '';
+    const preservedDesc = sessionStorage.getItem('ar_description') || '';
+    const preservedLang = sessionStorage.getItem('ar_lang') || 'en';
+
+    if (preservedTitle) titleEl.innerText = preservedTitle;
+    if (preservedDesc) descEl.innerText = preservedDesc;
+
+    // resolve model url
+    function queryParam(name) {
+      try { const url = new URL(window.location.href); return url.searchParams.get(name); } catch (e) { return null; }
+    }
+    const modelId = queryParam('modelId');
+    const modelUrl = modelMap[modelId] || null;
+
+    if (!modelUrl) {
+      setStatus('No model found for this ID.');
+    }
+
+    // Three.js + WebXR initialization
+    let renderer, scene, camera;
+    let reticle, controller;
+    let loader = new GLTFLoader();
+    let modelRoot, currentModel = null;
+    let hitTestSource = null;
+    let modelPlaced = false;
+
+    // Animation mixer
+    let mixer;
+    const clock = new THREE.Clock();
+
+    function init() {
+      renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.xr.enabled = true;
+      document.getElementById('ar-root').appendChild(renderer.domElement);
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera();
+
+      const light = new THREE.AmbientLight(0xffffff, 2.0);
+      scene.add(light);
+      const hemi = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 2.0);
+      scene.add(hemi);
+
+      modelRoot = new THREE.Group();
+      modelRoot.visible = false;
+      scene.add(modelRoot);
+
+      // reticle
+      const geo = new THREE.RingGeometry(0.08, 0.12, 32).rotateX(-Math.PI/2);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      reticle = new THREE.Mesh(geo, mat);
+      reticle.matrixAutoUpdate = false;
+      reticle.visible = false;
+      scene.add(reticle);
+
+      const arButton = ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
+      document.body.appendChild(arButton);
+
+      controller = renderer.xr.getController(0);
+      controller.addEventListener('select', onSelect);
+      scene.add(controller);
+
+      renderer.setAnimationLoop(render);
+      setStatus('Tap AR button to start');
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize(){
+      if (!renderer || !camera) return;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    async function loadGLB(url) {
+      return new Promise((resolve, reject) => {
+        loader.load(url, gltf => resolve(gltf), undefined, err => reject(err));
+      });
+    }
+
+    async function onSelect() {
+      if (!reticle.visible) return;
+      if (!currentModel) {
+        if (!modelUrl) { setStatus('No model URL available.'); return; }
+        setStatus('Loading model...');
+        try {
+          const gltf = await loadGLB(modelUrl);
+          currentModel = gltf.scene || gltf.scenes[0];
+
+          // Fit model to a 1x1x1 box for consistent scaling
+          const box = new THREE.Box3().setFromObject(currentModel);
+          const size = box.getSize(new THREE.Vector3());
+          const scale = 1.0 / Math.max(size.x, size.y, size.z);
+          currentModel.scale.set(scale, scale, scale);
+
+          modelRoot.add(currentModel);
+
+          if (gltf.animations && gltf.animations.length) {
+            mixer = new THREE.AnimationMixer(currentModel);
+            const action = mixer.clipAction(gltf.animations[0]);
+            action.play();
+          }
+
+        } catch (e) {
+          console.error('Failed to load GLB', e);
+          setStatus('Failed to load model.');
+          return;
+        }
+      }
+      // place
+      modelRoot.position.setFromMatrixPosition(reticle.matrix);
+      modelRoot.visible = true;
+      modelPlaced = true;
+      placeBtn.style.display = 'none';
+      setStatus('Model placed. Pinch to zoom, drag to move.');
+    }
     
-    <script type="module" src="ar-app.js"></script>
+    let initialPinchDistance = 0;
+    let initialScale = 1;
+    let activeTouches = {};
+
+    function getDistance(touches) {
+      return Math.hypot(touches[0].pageX - touches[1].pageX, touches[0].pageY - touches[1].pageY);
+    }
+
+    window.addEventListener('touchstart', (e) => {
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        activeTouches[e.changedTouches[i].identifier] = { x: e.changedTouches[i].pageX, y: e.changedTouches[i].pageY };
+      }
+      if (Object.keys(activeTouches).length === 2 && modelPlaced) {
+        initialPinchDistance = getDistance(Object.values(activeTouches));
+        initialScale = modelRoot.scale.x;
+      }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+       if (Object.keys(activeTouches).length === 2 && modelPlaced) {
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            if(activeTouches[e.changedTouches[i].identifier]) {
+              activeTouches[e.changedTouches[i].identifier] = { x: e.changedTouches[i].pageX, y: e.changedTouches[i].pageY };
+            }
+        }
+        const newDist = getDistance(Object.values(activeTouches));
+        const scale = initialScale * (newDist / initialPinchDistance);
+        modelRoot.scale.set(scale, scale, scale);
+      }
+    });
+
+    window.addEventListener('touchend', (e) => {
+       for (let i = 0; i < e.changedTouches.length; i++) {
+         delete activeTouches[e.changedTouches[i].identifier];
+       }
+    });
+
+
+    renderer.xr.addEventListener('sessionstart', async () => {
+      setStatus('Searching for surfaces...');
+      const session = renderer.xr.getSession();
+      const viewerSpace = await session.requestReferenceSpace('viewer');
+      hitTestSource = await session.requestHitTestSource({ space: viewerSpace });
+    });
+
+    renderer.xr.addEventListener('sessionend', () => {
+      setStatus('AR session ended');
+      hitTestSource = null;
+      reticle.visible = false;
+      modelPlaced = false;
+      placeBtn.style.display = 'none';
+    });
+
+    function render(time, frame) {
+      if (frame && hitTestSource) {
+        const hits = frame.getHitTestResults(hitTestSource);
+        if (hits.length > 0) {
+          const hit = hits[0];
+          const pose = hit.getPose(renderer.xr.getReferenceSpace());
+          reticle.visible = true;
+          reticle.matrix.fromArray(pose.transform.matrix);
+          if (!modelPlaced) {
+            placeBtn.style.display = 'block';
+            setStatus('Surface found — tap button to place');
+          }
+        } else {
+          reticle.visible = false;
+        }
+      }
+
+      if (mixer) {
+        mixer.update(clock.getDelta());
+      }
+      renderer.render(scene, camera);
+    }
+
+    // Controls
+    btnPlay.addEventListener('click', () => {
+      const txt = preservedDesc || descEl.innerText;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(txt);
+        u.lang = preservedLang === 'hi' ? 'hi-IN' : (preservedLang === 'kn' ? 'kn-IN' : 'en-US');
+        window.speechSynthesis.speak(u);
+      }
+    });
+    btnPause.addEventListener('click', () => { if ('speechSynthesis' in window) window.speechSynthesis.pause(); });
+    btnReset.addEventListener('click', () => {
+      if (modelRoot) { modelRoot.visible = false; }
+      if (currentModel) {
+          modelRoot.remove(currentModel);
+          currentModel = null;
+      }
+      if(mixer) mixer = null;
+      modelPlaced = false;
+      setStatus('Model reset. Find a surface to place again.');
+    });
+
+    placeBtn.addEventListener('click', () => { if (reticle.visible) onSelect(); });
+
+    init();
+  </script>
 </body>
 </html>

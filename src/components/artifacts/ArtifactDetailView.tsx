@@ -9,11 +9,11 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
-
+import { useRouter } from 'next/navigation';
 
 interface ArtifactDetailViewProps {
   artifact: Artifact;
@@ -25,6 +25,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedArtifactData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { t, language } = useTranslation();
+  const router = useRouter();
 
   const modelIdMap: { [key: string]: string } = {
     'art-1': 'mughal-painting',
@@ -36,18 +37,26 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
     'art-7': 'konark-wheel',
   };
   const modelId = modelIdMap[artifact.id];
-  const [launchAR, setLaunchAR] = useState(initialLaunchAR && !!modelId);
 
-  useEffect(() => {
-    if (launchAR && modelId) {
-        window.location.href = `/ar?id=${modelId}`;
+  const handleLaunchAR = () => {
+    if (optimizedData?.title && optimizedData?.description) {
+        sessionStorage.setItem('ar_title', optimizedData.title);
+        sessionStorage.setItem('ar_description', optimizedData.description);
+        sessionStorage.setItem('ar_lang', language);
     }
-  }, [launchAR, modelId]);
+    router.push(`/ar-view/index.html?modelId=${modelId}`);
+  };
+
+  useEffect(() => {
+    if (initialLaunchAR && modelId) {
+      if (optimizedData) {
+        handleLaunchAR();
+      }
+    }
+  }, [initialLaunchAR, modelId, optimizedData]);
 
 
   useEffect(() => {
-    if (launchAR) return;
-
     const processContent = async () => {
       setIsLoading(true);
       const input = {
@@ -71,15 +80,7 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
     };
 
     processContent();
-  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR, language]);
-
-  if (launchAR) {
-      return (
-        <div className="container text-center py-20">
-          <p>Redirecting to AR experience...</p>
-        </div>
-      );
-  }
+  }, [artifact, isLowBandwidth, isAccessibilityOn, isAudioOn, language]);
 
   if (isLoading) {
     return <ArtifactDetailSkeleton />;
@@ -98,10 +99,16 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
 
   return (
     <div className="container max-w-4xl mx-auto p-4 md:p-8">
-       <div className="mb-6">
+       <div className="mb-6 flex justify-between items-center">
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
+        {modelId && optimizedData.modelUrl && (
+             <Button onClick={handleLaunchAR}>
+                <View className="mr-2 h-4 w-4" />
+                {t('launch_ar')}
+            </Button>
+        )}
       </div>
 
       <div className="mb-8">

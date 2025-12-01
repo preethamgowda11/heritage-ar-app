@@ -15,17 +15,19 @@ import { ModelViewer } from '@/components/common/ModelViewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
+import { useRouter } from 'next/navigation';
 
 interface SiteDetailViewProps {
   site: Site;
   launchAR: boolean;
 }
 
-export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
+export function SiteDetailView({ site, launchAR: initialLaunchAR }: SiteDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedSiteData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { t, language } = useTranslation();
+  const router = useRouter();
   
   const modelIdMap: { [key: string]: string } = {
     'site-1': 'taj',
@@ -40,18 +42,27 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
   };
   const modelId = modelIdMap[site.id];
 
-  const [showAR, setShowAR] = useState(launchAR && !!modelId);
-
-  useEffect(() => {
-    if (launchAR && modelId) {
-        window.location.href = `/ar-view/index.html?modelId=${modelId}`;
+  const handleLaunchAR = () => {
+    if (optimizedData?.title && optimizedData?.longDescription) {
+        sessionStorage.setItem('ar_title', optimizedData.title);
+        sessionStorage.setItem('ar_description', optimizedData.longDescription);
+        sessionStorage.setItem('ar_lang', language);
     }
-  }, [launchAR, modelId]);
+    router.push(`/ar-view/index.html?modelId=${modelId}`);
+  };
+
+  useEffect(() => {
+    if (initialLaunchAR && modelId) {
+        // We need data to be loaded before redirecting to preserve it
+        // This effect will re-run once optimizedData is available
+        if (optimizedData) {
+            handleLaunchAR();
+        }
+    }
+  }, [initialLaunchAR, modelId, optimizedData]);
 
 
   useEffect(() => {
-    if (launchAR) return;
-
     const processContent = async () => {
       setIsLoading(true);
       const input = {
@@ -78,7 +89,7 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
     };
 
     processContent();
-  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn, launchAR, language]);
+  }, [site, isLowBandwidth, isAccessibilityOn, isAudioOn, language]);
 
   const coverImage = optimizedData?.coverImageUrl
     ? {
@@ -86,15 +97,6 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
         hint: PlaceHolderImages.find(p => p.imageUrl === optimizedData.coverImageUrl)?.imageHint || 'heritage site'
       }
     : null;
-
-  if (launchAR) {
-      return (
-        <div className="container text-center py-20">
-          <p>Redirecting to AR experience...</p>
-        </div>
-      );
-  }
-
 
   if (isLoading) {
     return <SiteDetailSkeleton />;
@@ -118,29 +120,25 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
         {modelId && (
-            <Button asChild>
-                <Link href={`/ar-view/index.html?modelId=${modelId}`}>
-                    <View className="mr-2 h-4 w-4" />
-                    {t('launch_ar')}
-                </Link>
+            <Button onClick={handleLaunchAR}>
+                <View className="mr-2 h-4 w-4" />
+                {t('launch_ar')}
             </Button>
         )}
       </div>
       
-      {showAR && optimizedData.modelUrl ? (
+      {optimizedData.modelUrl && (
         <div className="mb-8">
           <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={site.coverImageUrlId} />
-          <Button onClick={() => setShowAR(false)} className="mt-4 w-full">{t('show_details')}</Button>
-        </div>
-      ) : (
-        <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg">
-          {coverImage ? (
-            <Image src={coverImage.url} alt={`Cover image of ${optimizedData.title}`} fill className="object-cover" data-ai-hint={coverImage.hint} />
-          ) : (
-            <Skeleton className="w-full h-full" />
-          )}
         </div>
       )}
+
+      {!optimizedData.modelUrl && coverImage && (
+         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg">
+            <Image src={coverImage.url} alt={`Cover image of ${optimizedData.title}`} fill className="object-cover" data-ai-hint={coverImage.hint} />
+         </div>
+      )}
+      
 
       <header className="mb-6 text-center">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{optimizedData.title}</h1>
@@ -153,13 +151,6 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
       <div className="my-6">
         <SpeechSynthesisPlayer text={optimizedData.longDescription || ''} />
       </div>
-
-
-      {!showAR && optimizedData.modelUrl && (
-        <div className="text-center my-8">
-           <Button onClick={() => setShowAR(true)} size="lg">{t('show_3d_model')}</Button>
-        </div>
-      )}
       
       {site.artifacts.length > 0 && (
         <div className="mt-12">
@@ -196,7 +187,7 @@ function SiteDetailSkeleton() {
   return (
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
       <Skeleton className="h-8 w-36 mb-6" />
-      <Skeleton className="w-full h-64 md:h-96 rounded-lg mb-8" />
+      <Skeleton className="w-full h-96 rounded-lg mb-8" />
       <div className="text-center mb-6">
         <Skeleton className="h-12 w-1/2 mx-auto" />
       </div>
@@ -204,9 +195,6 @@ function SiteDetailSkeleton() {
         <Skeleton className="h-6 w-full" />
         <Skeleton className="h-6 w-full" />
         <Skeleton className="h-6 w-4/5" />
-      </div>
-      <div className="my-8 text-center">
-        <Skeleton className="h-12 w-48 mx-auto" />
       </div>
     </div>
   )
