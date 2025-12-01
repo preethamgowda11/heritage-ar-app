@@ -1,3 +1,4 @@
+
 import type { Site, Artifact } from '@/types';
 
 const allArtifacts: Artifact[] = [
@@ -102,7 +103,7 @@ const allArtifacts: Artifact[] = [
     description: {
       en: 'A traditional cultural heritage of Purulia, West Bengal, the Chhau mask is used in the Chhau dance, a semi-classical Indian dance with martial, tribal, and folk origins.',
       hi: 'पश्चिम बंगाल के पुरुलिया की एक पारंपरिक सांस्कृतिक विरासत, छऊ मुखौटा का उपयोग छऊ नृत्य में किया जाता है, जो मार्शल, आदिवासी और लोक मूल के साथ एक अर्ध-शास्त्रीय भारतीय नृत्य है।',
-      kn: 'ಪಶ್ಚಿಮ ಬಂಗಾಳದ ಪುರುലിയಾದ ಸಾಂಪ್ರದಾಯಿಕ సాంస్కృతిక ಪರಂಪರೆಯಾದ ਛਊ ಮುಖವಾಡವನ್ನು ਛਊ ನೃತ್ಯದಲ್ಲಿ ಬಳಸಲಾಗುತ್ತದೆ, ಇದು యుద్ధ, గిరిజన ಮತ್ತು ಜానಪದ ಮೂಲಗಳನ್ನು ಹೊಂದಿರುವ ಅರ್ಧ-ಶಾಸ್ತ್ರೀಯ ಭಾರತೀಯ ನೃತ್ಯವಾಗಿದೆ.',
+      kn: 'ಪಶ್ಚಿಮ ಬಂಗಾಳದ ಪುರುലിയಾದ ಸಾಂಪ್ರದಾಯಿಕ సాంస్కృతిక ಪರಂಪರೆಯಾದ ਛਊ ಮುಖವಾಡವನ್ನು ਛਊ ನೃತ್ಯದಲ್ಲಿ ಬಳಸಲಾಗುತ್ತದೆ, ಇದು యుద్ధ, గిరిజన మరియు ಜానಪದ ಮೂಲಗಳನ್ನು ಹೊಂದಿರುವ ಅರ್ಧ-ಶಾಸ್ತ್ರೀಯ ಭಾರತೀಯ ನೃತ್ಯವಾಗಿದೆ.',
     },
     imageUrlId: 'chhau-mask-artifact',
     modelFileUrl: '/models/chhau_mask.glb',
@@ -120,7 +121,7 @@ const allArtifacts: Artifact[] = [
     description: {
       en: "One of the 24 intricately carved stone wheels of the Konark Sun Temple's chariot structure. These wheels are not just decorative but also function as sundials.",
       hi: "कोणार्क सूर्य मंदिर की रथ संरचना के 24 जटिल रूप से नक्काशीदार पत्थर के पहियों में से एक। ये पहिये न केवल सजावटी हैं बल्कि सूर्य घड़ी के रूप में भी कार्य करते हैं।",
-      kn: "ಕೋನಾರ್ಕ್ ಸೂರ್ಯ ದೇವಾಲಯದ రథ ರಚನೆಯ 24 ಸಂಕീർണ്ണವಾಗಿ ಕೆತ್ತಿದ ಕಲ್ಲಿನ ಚಕ್ರಗಳಲ್ಲಿ ಒಂದು. ಈ ಚಕ್ರಗಳು ಕೇವಲ ಅಲಂಕಾರಿಕವಲ್ಲದೆ ಸೂರ್ಯಗಡಿಯாரಗಳಾಗಿಯೂ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ.",
+      kn: "ಕೋನಾರ್ಕ್ ಸೂರ್ಯ ದೇವಾಲಯದ రథ ರಚನೆಯ 24 ಸಂಕೀರ್ಣವಾಗಿ ಕೆತ್ತಿದ ಕಲ್ಲಿನ ಚಕ್ರಗಳಲ್ಲಿ ಒಂದು. ಈ ಚಕ್ರಗಳು ಕೇವಲ ಅಲಂಕಾರಿಕವಲ್ಲದೆ ಸೂರ್ಯಗಡಿಯாரಗಳಾಗಿಯೂ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ.",
     },
     imageUrlId: 'konark-wheel-artifact',
     modelFileUrl: '/models/konark_wheel.glb',
@@ -145,7 +146,7 @@ const allSites: Site[] = [
     longDescription: {
       en: 'The Taj Mahal is an immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor Shah Jahan in memory of his favourite wife. The Taj Mahal is the jewel of Muslim art in India and one of the universally admired masterpieces of the world\'s heritage.',
       hi: 'ताजमहल सफेद संगमरमर का एक विशाल मकबरा है, जिसे आगरा में 1631 और 1648 के बीच मुगल सम्राट शाहजहाँ के आदेश पर उनकी पसंदीदा पत्नी की याद में बनाया गया था। ताजमहल भारत में मुस्लिम कला का गहना है और दुनिया की विरासत के सार्वभौमिक रूप से प्रशंसित उत्कृष्ट कृतियों में से एक है।',
-      kn: 'ತಾಜ್ ಮಹಲ್ ಬಿಳಿ ಅಮೃತಶಿಲೆಯ ஒரு বিশাল ಸಮಾധಿಯಾಗಿದೆ, ಇದನ್ನು ఆగ్రాలో 1631 ಮತ್ತು 1648 ರ ನಡುವೆ మొఘల్ सम्राट షాజహాన్ ಆದೇಶದ ಮೇರೆಗೆ అతని প্রিয় மனைவி ನೆನಪಿಗಾಗಿ ನಿರ್ಮಿಸಲಾಯಿತು. ತಾജ് ಮಹಲ್ ಭಾರತದಲ್ಲಿ ಮುಸ್ಲಿం ಕಲೆಯ ఆభరణವಾಗಿದೆ மற்றும் ವಿಶ್ವ ಪರಂಪರೆಯ ಸಾರ್ವತ್ರಿಕವಾಗಿ ಮೆಚ್ಚುಗೆ ಪಡೆದ ಮೇರುಕೃತಿಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ.',
+      kn: 'ತಾಜ್ ಮಹಲ್ ಬಿಳಿ ಅಮೃತಶಿಲೆಯ एक বিশাল ಸಮಾಧಿಯಾಗಿದೆ, ಇದನ್ನು ఆగ్రాలో 1631 ಮತ್ತು 1648 ರ ನಡುವೆ మొఘల్ सम्राट షాజహాన్ ಆದೇಶದ ಮೇರೆಗೆ అతని প্রিয় மனைவி ನೆನಪಿಗಾಗಿ ನಿರ್ಮಿಸಲಾಯಿತು. ತಾജ് ಮಹಲ್ ಭಾರತದಲ್ಲಿ ಮುಸ್ಲಿం ಕಲೆಯ ఆభరణವಾಗಿದೆ ಮತ್ತು ವಿಶ್ವ ಪರಂಪರೆಯ ಸಾರ್ವತ್ರಿಕವಾಗಿ ಮೆಚ್ಚುಗೆ ಪಡೆದ ಮೇರುಕೃತಿಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ.',
     },
     thumbnailUrlId: 'taj-mahal-thumb',
     coverImageUrlId: 'taj-mahal-cover',
@@ -158,9 +159,9 @@ const allSites: Site[] = [
   {
     id: 'site-2',
     title: {
-      en: 'Hampi',
-      hi: 'हम्पी',
-      kn: 'ಹಂపి',
+        en: "Hampi Chariot",
+        kn: "ಹಂಪಿ ರಥ",
+        hi: "हम्पी रथ"
     },
     shortDescription: {
       en: 'The ruined city of Vijayanagara, the former capital of the Vijayanagara Empire.',
@@ -168,14 +169,14 @@ const allSites: Site[] = [
       kn: 'ವಿಜಯನಗರದ ಹಾಳಾದ ನಗರ, ವಿಜayanagara ಸಾಮ್ರಾಜ್ಯದ ಹಿಂದಿನ ರಾಜಧಾನಿ.',
     },
     longDescription: {
-      en: 'Hampi, the seat of the famed Vijayanagara empire was the capital of the largest empire in post-mughal India, covering several states. The ruins of Hampi of the 14th Century lies scattered in about 26 sq. km area, amidst giant boulders and vegetation.',
-      hi: 'हम्पी, प्रसिद्ध विजयनगर साम्राज्य की सीट, मुगल के बाद के भारत में सबसे बड़े साम्राज्य की राजधानी थी, जिसमें कई राज्य शामिल थे। 14 वीं शताब्दी के हम्पी के खंडहर लगभग 26 वर्ग किलोमीटर क्षेत्र में विशाल शिलाखंडों और वनस्पतियों के बीच बिखरे हुए हैं।',
-      kn: 'ಹಂಪಿ, ಪ್ರಸಿದ್ಧ ವಿಜಯನಗರ సామ్రాಜ್ಯದ స్థానం, మొఘల్ ನಂತರದ ಭಾರತದಲ್ಲಿ ಅತಿದೊಡ್ಡ ಸಾಮ్రాಜ್ಯದ రాజధానిವಾಗಿತ್ತು, જેમાં ಹಲವಾರು ರಾಜ್ಯಗಳು ಸೇರಿದ್ದವು. 14 ನೇ ಶತಮಾನದ ಹಂಪಿಯ ಅವಶೇಷಗಳು ಸುಮಾರು 26 ಚದర కిలోమీటర్ల ಪ್ರದೇಶದಲ್ಲಿ বিশাল ಬಂಡೆಗಳು மற்றும் ಸಸ್ಯವರ್ಗದ ನಡುವೆ ಹರಡಿಕೊಂಡಿವೆ.',
+      en: 'Hampi, the seat of the famed Vijayanagara empire was the capital of the largest empire in post-mughal India, covering several states. The ruins of Hampi of the 14th Century lies scattered in about 26 sq. km area, amidst giant boulders and vegetation. The stone chariot is the flagship tourist attraction of Hampi.',
+      hi: 'हम्पी, प्रसिद्ध विजयनगर साम्राज्य की सीट, मुगल के बाद के भारत में सबसे बड़े साम्राज्य की राजधानी थी, जिसमें कई राज्य शामिल थे। 14 वीं शताब्दी के हम्पी के खंडहर लगभग 26 वर्ग किलोमीटर क्षेत्र में विशाल शिलाखंडों और वनस्पतियों के बीच बिखरे हुए हैं। पत्थर का रथ हम्पी का प्रमुख पर्यटक आकर्षण है।',
+      kn: 'ಹಂಪಿ, ಪ್ರಸಿದ್ಧ ವಿಜಯನಗರ సామ్రాಜ್ಯದ స్థానం, మొఘల్ ನಂತರದ ಭಾರತದಲ್ಲಿ ಅತಿದೊಡ್ಡ ಸಾಮ್ರಾಜ್ಯದ రాజధానిವಾಗಿತ್ತು, જેમાં ಹಲವಾರು ರಾಜ್ಯಗಳು ಸೇರಿದ್ದವು. 14 ನೇ ಶತಮಾನದ ಹಂಪಿಯ ಅವಶೇಷಗಳು ಸುಮಾರು 26 ಚದర కిలోమీటర్ల ಪ್ರದೇಶದಲ್ಲಿ বিশাল ಬಂಡೆಗಳು ಮತ್ತು ಸಸ್ಯವರ್ಗದ ನಡುವೆ ಹರಡಿಕೊಂಡಿವೆ. ಕಲ್ಲಿನ ರಥ ಹಂಪಿಯ ಪ್ರಮುಖ ಪ್ರವಾಸಿ ಆಕರ್ಷಣೆಯಾಗಿದೆ.',
     },
     thumbnailUrlId: 'hampi-thumb',
     coverImageUrlId: 'hampi-cover',
     lowPolyModelUrl: '/models/hampi_low.glb',
-    highPolyModelUrl: '/models/hampi_high.glb',
+    highPolyModelUrl: '/models/stone_chariot_in_hampi.glb',
     fallback360UrlId: 'fallback-360-hampi',
     audioNarrationUrl: '/audio/hampi_en.mp3',
     artifacts: allArtifacts.filter((a) => a.siteId === 'site-2'),
@@ -194,8 +195,8 @@ const allSites: Site[] = [
     },
     longDescription: {
       en: 'The Qutub Minar is a towering 73-meter high tower built by Qutub-ud-Din Aibak in 1193. The tower was built to celebrate Muslim dominance in Delhi after the defeat of Delhi’s last Hindu ruler. This tower is the highest tower in India, complete with five storeys and a projecting balcony.',
-      hi: 'कुतुब मीनार 1193 में कुतुब-उद-दीन ऐबक द्वारा निर्मित एक 73-मीटर ऊंचा टॉवर है। यह टॉवर दिल्ली के अंतिम हिंदू शासक की हार کے بعد दिल्ली में मुस्लिम प्रभुत्व کا جشن منانے کے लिए बनाया गया था। यह टॉवर भारत का सबसे ऊंचा टॉवर है, जिसमें पांच मंजिलें और एक प्रक्षेपित बालकनी है।',
-      kn: 'ಕುతుಬ್ ಮಿನಾರ್ 1193 ರಲ್ಲಿ ಕುतुబ్-ಉದ್-दीन ఐబక్ ನಿರ್ಮಿಸಿದ 73-ಮೀಟರ್ ಎತ್ತರದ ಗೋಪುರವಾಗಿದೆ. ਦਿੱଲಿಯ ಕೊನೆಯ ಹಿಂದೂ शासकನ ಸೋಲಿನ ನಂತರ ਦਿੱଲಿಯಲ್ಲಿ ಮುಸ್ಲಿం प्रभुत्वವನ್ನು ಆಚರಿಸಲು ఈ ಗೋಪುರವನ್ನು ನಿರ್ಮಿಸಲಾಯಿತು. ఈ ಗೋಪುರವು ಭಾರತದ ಅತಿ ಎತ್ತರದ ಗೋಪುರವಾಗಿದ್ದು, ಐದು అంతస్తుಗಳು మరియు ఒక ప్రक्षेपित ಬಾಲ್ಕனಿಯನ್ನು ಹೊಂದಿದೆ.',
+      hi: 'कुतुब मीनार 1193 में कुतुब-उद-दीन ऐबक द्वारा निर्मित एक 73-मीटर ऊंचा टॉवर है। यह टॉवर दिल्ली के अंतिम हिंदू शासक की हार के बाद दिल्ली में मुस्लिम प्रभुत्व का جشن منانے के लिए बनाया गया था। यह टॉवर भारत का सबसे ऊंचा टॉवर है, जिसमें पांच मंजिलें और एक प्रक्षेपित बालकनी है।',
+      kn: 'ಕುతుಬ್ ಮಿನಾರ್ 1193 ರಲ್ಲಿ ಕುतुబ్-ಉದ್-दीन ఐబక్ ನಿರ್ಮಿಸಿದ 73-ಮೀಟರ್ ಎತ್ತರದ ಗೋಪುರವಾಗಿದೆ. ਦਿੱଲಿಯ ಕೊನೆಯ ಹಿಂದೂ शासकನ ಸೋಲಿನ ನಂತರ ਦਿੱଲಿಯಲ್ಲಿ ಮುಸ್ಲಿం प्रभुत्वವನ್ನು ಆಚರಿಸಲು ಈ ಗೋಪುರವನ್ನು ನಿರ್ಮಿಸಲಾಯಿತು. ಈ ಗೋಪುರವು ಭಾರತದ ಅತಿ ಎತ್ತರದ ಗೋಪುರವಾಗಿದ್ದು, ಐದು అంతస్తుಗಳು మరియు ಒಂದು ప్రक्षेपित ಬಾಲ್ಕನಿಯನ್ನು ಹೊಂದಿದೆ.',
     },
     thumbnailUrlId: 'qutub-minar-thumb',
     coverImageUrlId: 'qutub-minar-cover',
@@ -215,12 +216,12 @@ const allSites: Site[] = [
     shortDescription: {
       en: 'A 13th-century CE sun temple at Konark in Odisha, India.',
       hi: 'भारत के ओडिशा में कोणार्क में 13 वीं शताब्दी का सूर्य मंदिर।',
-      kn: 'ಭಾರತದ ஒಡಿಶಾದ కోనार्क‌ನಲ್ಲಿರುವ 13 ನೇ നൂറ്റാണ്ടಿನ ಸೂರ್ಯ ದೇವಾಲಯ.',
+      kn: 'ಭಾರತದ ஒಡಿಶಾದ కోనार्क‌ನಲ್ಲಿರುವ 13 ನೇ നൂറ്റಾണ്ടಿನ ಸೂರ್ಯ ದೇವಾಲಯ.',
     },
     longDescription: {
       en: 'The Konark Sun Temple is a 13th-century temple dedicated to the Hindu sun god Surya. Shaped like a giant chariot, the temple is known for its exquisite stone carvings that cover the entire structure. It is a classic example of Kalinga architecture.',
       hi: 'कोणार्क सूर्य मंदिर 13 वीं शताब्दी का मंदिर है जो हिंदू सूर्य देव सूर्य को समर्पित है। एक विशाल रथ के आकार का, यह मंदिर अपनी उत्तम पत्थर की नक्काशी के लिए जाना जाता है जो पूरी संरचना को कवर करती है। यह कलिंग वास्तुकला का एक उत्कृष्ट उदाहरण है।',
-      kn: 'ಕೋನಾರ್ಕ್ ಸೂರ್ಯ ದೇವಾಲಯವು 13 ನೇ നൂറ്റാണ്ടಿನ ಹಿಂದೂ ಸೂರ್ಯദേವ సూర్యನಿಗೆ ಸಮર્ಪಿತವಾದ ದೇವಾಲಯವಾಗಿದೆ. ಒಂದು বিশাল రథದ आकारದಲ್ಲಿರುವ ಈ ದೇವಾಲಯವು ಇಡೀ ರಚನೆಯನ್ನು ಆವರಿಸಿರುವ సున్నితವಾದ ಕಲ್ಲಿನ ಕೆತ್ತನೆಗಳಿಗೆ ಹೆಸರುವಾಸಿಯಾಗಿದೆ. ఇది കലിംഗ স্থাপত্যದ ઉત્તમ ઉદાಹરણವಾಗಿದೆ.',
+      kn: 'ಕೋನಾರ್ಕ್ ಸೂರ್ಯ ದೇವಾಲಯವು 13 ನೇ നൂറ്റಾണ്ടಿನ ಹಿಂದೂ ಸೂರ್ಯദേವ సూర్యನಿಗೆ ಸಮર્ಪಿತವಾದ ದೇವಾಲಯವಾಗಿದೆ. ಒಂದು বিশাল రథದ आकारದಲ್ಲಿರುವ ಈ ದೇವಾಲಯವು ಇಡೀ ರಚನೆಯನ್ನು ಆವರಿಸಿರುವ సున్నితವಾದ ಕಲ್ಲಿನ ಕೆತ್ತನೆಗಳಿಗೆ ಹೆಸರುವಾಸಿಯಾಗಿದೆ. ఇది കലിംഗ স্থাপত্যದ ઉત્તમ ઉદાಹરણವಾಗಿದೆ.',
     },
     thumbnailUrlId: 'konark-sun-temple-thumb',
     coverImageUrlId: 'konark-sun-temple-cover',
@@ -244,8 +245,8 @@ const allSites: Site[] = [
     },
     longDescription: {
       en: 'Rani-ki-Vav is an exceptional example of a distinctive form of subterranean water architecture of the Indian subcontinent, the stepwell. It was built in the 11th century AD, and is a memorial to a king. It is designed as an inverted temple highlighting the sanctity of water.',
-      hi: 'रानी की वाव भारतीय उपमहाद्वीप के भूमिगत जल वास्तुकला کے ایک विशिष्ट रूप, बावड़ी का एक असाधारण उदाहरण है। इसे 11 वीं शताब्दी ईस्वी में بنایا गया था, और यह एक राजा का स्मारक है। इसे एक उल्टे मंदिर کے रूप में डिजाइन किया गया है ਜੋ पानी की पवित्रता को उजागर करता है।',
-      kn: 'ರಾಣി-కి-വാቭ ಭಾರತೀಯ ಉಪಖಂಡದ భూగర్భ జల স্থাপত্যದ ఒక विशिष्ट ರೂಪವಾದ ಮೆಟ್ಟಿಲುಬಾವಿಯ ಅసాధారణ उदाहरणವಾಗಿದೆ. ಇದನ್ನು 11 ನೇ നൂറ്റాണ്ടಿನಲ್ಲಿ ನಿರ್మಿಸಲಾಯಿತು, ಮತ್ತು ఇది ಒಬ್ಬ ರಾಜನ ಸ್ಮಾರಕವಾಗಿದೆ. ಇದನ್ನು నీటి పవిత్రತೆಯನ್ನು ਉਜਾਗਰ ಮಾಡುವ ತಲೆಕೆಳಗಾದ ದೇವಾಲಯವಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ.',
+      hi: 'रानी की वाव भारतीय उपमहाद्वीप के भूमिगत जल वास्तुकला کے एक विशिष्ट रूप, बावड़ी का एक असाधारण उदाहरण है। इसे 11 वीं शताब्दी ईस्वी में बनाया गया था, और यह एक राजा का स्मारक है। इसे एक उल्टे मंदिर के रूप में डिजाइन किया गया है जो पानी की पवित्रता को उजागर करता है।',
+      kn: 'ರಾಣി-కి-വാቭ ಭಾರತೀಯ ಉಪಖಂಡದ భూగర్భ జల স্থাপত্যದ ఒక विशिष्ट ರೂಪವಾದ ಮೆಟ್ಟಿಲುಬಾವಿಯ ಅసాధారణ उदाहरणವಾಗಿದೆ. ಇದನ್ನು 11 ನೇ നൂറ്റాണ്ടಿನಲ್ಲಿ ನಿರ್ಮಿಸಲಾಯಿತು, ಮತ್ತು ఇది ಒಬ್ಬ ರಾಜನ ಸ್ಮಾರಕವಾಗಿದೆ. ಇದನ್ನು నీటి పవిత్రತೆಯನ್ನು ਉਜਾਗਰ ಮಾಡುವ ತಲೆಕೆಳಗಾದ ದೇವಾಲಯವಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ.',
     },
     thumbnailUrlId: 'rani-ki-vav-thumb',
     coverImageUrlId: 'rani-ki-vav-cover',
@@ -265,12 +266,12 @@ const allSites: Site[] = [
     shortDescription: {
       en: 'A monument and mosque located in Hyderabad, Telangana, India.',
       hi: 'भारत के तेलंगाना के हैदराबाद में स्थित एक स्मारक और मस्जिद।',
-      kn: 'ಭಾರತದ ತೆಲಂಗಾಣದ ಹೈദರಾಬಾದ್‌ನಲ್ಲಿರುವ ಒಂದು ಸ್ಮಾರಕ ಮತ್ತು ಮಸೀದಿ.',
+      kn: 'ಭಾರತದ ತೆಲಂಗಾಣದ ಹೈದರಾಬಾದ್‌ನಲ್ಲಿರುವ ಒಂದು ಸ್ಮಾರಕ ಮತ್ತು ಮಸೀದಿ.',
     },
     longDescription: {
       en: 'The Charminar, constructed in 1591, is a monument and mosque located in Hyderabad. The landmark has become a global icon of Hyderabad, listed among the most recognized structures of India. It is a brilliant example of Indo-Islamic architecture.',
-      hi: 'चारमीनार, 1591 में निर्मित, हैदराबाद में स्थित एक स्मारक और मस्जिद है। यह landmark हैदराबाद کا عالمی प्रतीक बन गया ہے, جسے भारत की सबसे मान्यता प्राप्त संरचनाओं میں सूचीबद्ध किया गया है। यह इंडो-इस्लामिक वास्तुकला का एक शानदार उदाहरण है।',
-      kn: 'ಚಾರ್ಮಿನಾರ್, 1591 ರಲ್ಲಿ ನಿರ್ಮించಲ್ಪಟ್ಟಿದೆ, ಹೈദರಾಬಾದ್‌ನಲ್ಲಿರುವ ఒక ಸ್ಮಾರಕ ಮತ್ತು ಮಸೀದಿಯಾಗಿದೆ. ഈ સીમાचिह्न హైదరాబాద్‌ನ ಜಾಗತಿಕ પ્રતીકವಾಗಿ ಮಾರ್ಪಟ್ಟಿದೆ, ಇದನ್ನು भारतದ అత్యంత గుర్తింపు పొందిన ರಚನೆಗಳಲ್ಲಿ ಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ. இது ಇಂಡോ-इस्लामिक वास्तुकला का ಒಂದು शानदार उदाहरणವಾಗಿದೆ.',
+      hi: 'चारमीनार, 1591 में निर्मित, हैदराबाद में स्थित एक स्मारक और मस्जिद है। यह landmark हैदराबाद का عالمی प्रतीक बन गया है, जिसे भारत की सबसे मान्यता प्राप्त संरचनाओं में सूचीबद्ध किया गया है। यह इंडो-इस्लामिक वास्तुकला का एक शानदार उदाहरण है।',
+      kn: 'ಚಾರ್ಮಿನಾರ್, 1591 ರಲ್ಲಿ ನಿರ್ಮించಲ್ಪಟ್ಟಿದೆ, ಹೈದರಾಬಾದ್‌ನಲ್ಲಿರುವ ಒಂದು ಸ್ಮಾರಕ ಮತ್ತು ಮಸೀದಿಯಾಗಿದೆ. ಈ સીમાचिह्न హైదరాబాద్‌ನ ಜಾಗತಿಕ પ્રતીકವಾಗಿ ಮಾರ್ಪಟ್ಟಿದೆ, ಇದನ್ನು भारतದ ಅತ್ಯంత గుర్తింపు పొందిన ರಚನೆಗಳಲ್ಲಿ ಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ. ಇದು ಇಂಡೋ-इस्लामिक वास्तुकला का ಒಂದು शानदार उदाहरणವಾಗಿದೆ.',
     },
 thumbnailUrlId: 'charminar-thumb',
     coverImageUrlId: 'charminar-cover',
@@ -290,12 +291,12 @@ thumbnailUrlId: 'charminar-thumb',
     shortDescription: {
       en: 'An important Hindu temple dedicated to Jagannath, a form of Vishnu.',
       hi: 'विष्णु के một रूप जगन्नाथ को समर्पित एक महत्वपूर्ण हिंदू मंदिर।',
-      kn: 'ವಿಷ್ಣುವಿನ ಒಂದು ರೂಪವಾದ ଜଗన్నాഥನಿಗೆ સમર્પિતವಾದ ಪ್ರಮುಖ હિંદુ મંદિર.',
+      kn: 'ವಿಷ್ಣುವಿನ ಒಂದು ರೂಪವಾದ ଜଗన్నాഥನಿಗೆ સમર્ಪಿತವಾದ ಪ್ರಮುಖ હિંદુ મંદિર.',
     },
     longDescription: {
       en: 'The Shri Jagannath Temple of Puri is an important Hindu temple dedicated to Jagannath. The present temple was rebuilt from the 10th century onwards, on the site of an earlier temple, and begun by King Anantavarman Chodaganga Deva, first of the Eastern Ganga dynasty.',
-      hi: 'पुरी का श्री जगन्नाथ मंदिर जगन्नाथ کو समर्पित एक महत्वपूर्ण हिंदू मंदिर है। वर्तमान मंदिर 10 वीं शताब्दी से पहले के मंदिर کی جگہ پر बनाया गया تھا, اور पूर्वी गंगा राजवंश کے پہلے राजा अनंतवर्मन चोडगંગ deva द्वारा शुरू किया गया था।',
-      kn: 'పురిയിലെ శ్రీ జగన్నాథ ದೇವಾಲಯವು ଜగన్నాഥನಿಗೆ ಸಮર્ಪಿತವಾದ ಪ್ರಮುಖ હિંદુ मंदिरವಾಗಿದೆ. ಪ್ರಸ್ತುತ ದೇವಾಲಯವನ್ನು 10 ನೇ നൂറ്റാंडಿನಿಂದ ପୂର୍ବದ ದೇವಾಲಯದ స్థలದಲ್ಲಿ ಪುനർനിర్మಿಸಲಾಯಿತು, మరియు ಪೂರ್ವ ಗಂಗা ರಾಜവംಶದ પ્રથમ ರಾಜ અનంతవర్மன் ಚೋడಗಂಗ ದೇವರಿಂದ ಪ್ರಾರಂಭಿಸಲಾಯಿತು.',
+      hi: 'पुरी का श्री जगन्नाथ मंदिर जगन्नाथ को समर्पित एक महत्वपूर्ण हिंदू मंदिर है। वर्तमान मंदिर 10 वीं शताब्दी से पहले के मंदिर की जगह पर बनाया गया था, और पूर्वी गंगा राजवंश के पहले राजा अनंतवर्मन चोडगંગ deva द्वारा शुरू किया गया था।',
+      kn: 'పురిയിലെ శ్రీ జగన్నాథ ದೇವಾಲಯವು ଜగన్నాഥನಿಗೆ ಸಮર્ಪಿತವಾದ ಪ್ರಮುಖ હિંદુ मंदिरವಾಗಿದೆ. ಪ್ರಸ್ತುತ ದೇವಾಲಯವನ್ನು 10 ನೇ നൂറ്റాंडಿನಿಂದ ପୂର୍ବದ ದೇವಾಲಯದ స్థలದಲ್ಲಿ ಪುನർനിర్మಿಸಲಾಯಿತು, మరియు ಪೂರ್ವ ಗಂಗা ರಾಜവംಶದ પ્રથમ ರಾಜ અનంతవర్மன் ಚೋడಗಂಗ ದೇವರಿಂದ ಪ್ರಾರಂಭಿಸಲಾಯಿತು.',
     },
     thumbnailUrlId: 'jagannath-puri-thumb',
     coverImageUrlId: 'jagannath-puri-cover',
@@ -319,8 +320,8 @@ thumbnailUrlId: 'charminar-thumb',
     },
     longDescription: {
       en: 'Ellora is one of the largest rock-cut monastery-temple cave complexes in the world, featuring Hindu, Buddhist and Jain monuments, and artwork, dating from the 600–1000 CE period. Cave 16, in particular, features the largest single monolithic rock excavation in the world, the Kailasha temple.',
-      hi: 'एलोरा दुनिया के सबसे बड़े रॉक-कट मठ-मंदिर गुफा परिसरों में से एक है, जिसमें 600-1000 ईस्वी की अवधि के हिंदू, बौद्ध और जैन स्मारक और कलाकृतियां हैं। विशेष रूप سے, गुफा 16 में दुनिया की सबसे बड़ी एकल अखंड रॉक खुदाई, कैलाश मंदिर है।',
-      kn: 'എല്ലോరా ప్రపంచത്തിലെ ಅತಿದೊಡ್ಡ ಬಂಡೆಯಿಂದ കൊರೆದ मठ-મંદિર ಗುಹೆ ಸಂಕೀರ್ಣಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ, જેમાં 600-1000 CE ಅವಧಿಯ ಹಿಂದೂ, ಬૌദ്ധ మరియు ಜైన સ્માരಕಗಳು এবং कलाकृतिಗಳು உள்ளன. ವಿಶೇಷವಾಗಿ, ಗುಹೆ 16 ರಲ್ಲಿ ವಿಶ್ವದ ಅತಿದೊಡ್ಡ ಏಕಶಿಲೆಯ ಬಂಡೆಯ उत्खनन, ಕೈലാश ದೇವಾಲಯವಿದೆ.',
+      hi: 'एलोरा दुनिया के सबसे बड़े रॉक-कट मठ-मंदिर गुफा परिसरों में से एक है, जिसमें 600-1000 ईस्वी की अवधि के हिंदू, बौद्ध और जैन स्मारक और कलाकृतियां हैं। विशेष रूप से, गुफा 16 में दुनिया की सबसे बड़ी एकल अखंड रॉक खुदाई, कैलाश मंदिर है।',
+      kn: 'ಎಲ್ಲೋರಾ ప్రపంచത്തിലെ ಅತಿದೊಡ್ಡ ಬಂಡೆಯಿಂದ കൊರೆದ मठ-મંદિર ಗುಹೆ ಸಂಕೀರ್ಣಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ, જેમાં 600-1000 CE ಅವಧಿಯ ಹಿಂದೂ, ಬೌദ്ധ మరియు ಜైన સ્માരಕಗಳು এবং कलाकृतिಗಳು உள்ளன. ವಿಶೇಷವಾಗಿ, ಗುಹೆ 16 ರಲ್ಲಿ ವಿಶ್ವದ ಅತಿದೊಡ್ಡ ಏಕಶಿಲೆಯ ಬಂಡೆಯ उत्खनन, ಕೈಲಾश ದೇವಾಲಯವಿದೆ.',
     },
     thumbnailUrlId: 'ellora-caves-thumb',
     coverImageUrlId: 'ellora-caves-cover',
@@ -340,12 +341,12 @@ thumbnailUrlId: 'charminar-thumb',
     shortDescription: {
       en: 'A Buddhist complex, famous for its Great Stupa, on a hilltop at Sanchi Town in Madhya Pradesh.',
       hi: 'मध्य प्रदेश के सांची टाउन में एक पहाड़ी पर स्थित एक बौद्ध परिसर, जो अपने महान स्तूप के लिए प्रसिद्ध है।',
-      kn: 'ಮಧ್ಯಪ್ರದೇಶದ सांची పట్టణದಲ್ಲಿ ಒಂದು குன்றின் ಮೇಲೆ ಇರುವ ಬೌದ್ಧ ಸಂಕೀರ್ಣ, இது ತನ್ನ ಮಹಾಸ್ತూపಕ್ಕೆ ప్రసిద్ధి.',
+      kn: 'ಮಧ್ಯಪ್ರದೇಶದ सांची పట్టణದಲ್ಲಿ ಒಂದು குன்றின் ಮೇಲೆ ಇರುವ ಬೌದ್ಧ ಸಂಕೀರ್ಣ, ಇದು ತನ್ನ ಮಹಾಸ್ತూపಕ್ಕೆ ప్రసిద్ధి.',
     },
     longDescription: {
       en: 'The Great Stupa at Sanchi is one of the oldest stone structures in India and was originally commissioned by the emperor Ashoka in the 3rd century BCE. Its nucleus was a simple hemispherical brick structure built over the relics of the Buddha. It is an important monument of Indian Architecture.',
       hi: 'सांची का महान स्तूप भारत की सबसे पुरानी पत्थर की संरचनाओं में से एक है और मूल रूप से सम्राट अशोक द्वारा तीसरी शताब्दी ईसा पूर्व में कमीशन किया गया था। इसका केंद्र बुद्ध के अवशेषों पर बनी एक साधारण गोलार्द्ध ईंट संरचना थी। यह भारतीय वास्तुकला का एक महत्वपूर्ण स्मारक है।',
-      kn: 'ಸಾಂਚಿಯ ಮಹಾಸ್ತੂಪವು ಭಾರತದ ಅತ್ಯಂತ ಹಳೆಯ ಕಲ್ಲಿನ ರಚನೆಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ మరియు దీనిని मूलतः सम्राट അശോകನು ಕ್ರಿ.ಪೂ 3 ನೇ നൂറ്റాണ്ടಿನಲ್ಲಿ ನಿಯೋಜಿಸಿದನು. దీని केंद्र बुद्धನ અવशेषಗಳ ಮೇಲೆ ನಿರ್ಮಿಸಲಾದ एक साधारण ಅರ್ಧಗೋಳాకార ಇಟ್ಟಿಗೆ ರಚನೆಯಾಗಿತ್ತು. ఇది భారతೀಯ वास्तुकला ਦਾ एक ముఖ్యమైన સ્માരಕವಾಗಿದೆ.',
+      kn: 'ಸಾಂಚಿಯ ಮಹಾಸ್ತೂಪವು ಭಾರತದ ಅತ್ಯಂತ ಹಳೆಯ ಕಲ್ಲಿನ ರಚನೆಗಳಲ್ಲಿ ಒಂದಾಗಿದೆ మరియు దీనిని मूलतः सम्राट അശോകನು ಕ್ರಿ.ಪೂ 3 ನೇ നൂറ്റాണ്ടಿನಲ್ಲಿ ನಿಯೋಜಿಸಿದನು. దీని केंद्र बुद्धನ અવशेषಗಳ ಮೇಲೆ ನಿರ್ಮಿಸಲಾದ एक साधारण ಅರ್ಧಗೋಳాకార ಇಟ್ಟಿಗೆ ರಚನೆಯಾಗಿತ್ತು. ఇది భారతೀಯ वास्तुकला ਦਾ एक ముఖ్యమైన સ્માരಕವಾಗಿದೆ.',
     },
 thumbnailUrlId: 'sanchi-stupa-thumb',
     coverImageUrlId: 'sanchi-stupa-cover',
@@ -364,3 +365,5 @@ export const getSiteById = (id: string): Site | undefined => allSites.find((site
 export const getArtifacts = (): Artifact[] => allArtifacts;
 
 export const getArtifactById = (id: string): Artifact | undefined => allArtifacts.find((artifact) => artifact.id === id);
+
+    
