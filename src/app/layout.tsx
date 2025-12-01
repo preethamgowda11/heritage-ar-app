@@ -6,9 +6,9 @@ import { cn } from '@/lib/utils';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Heritage Lens',
+  title: 'Bharat Heritage',
   description:
-    "Explore India's cultural heritage in augmented reality with Heritage Lens. A web app for virtual tours of historical sites and artifacts.",
+    "Explore India's cultural heritage in augmented reality with Bharat Heritage. A web app for virtual tours of historical sites and artifacts.",
 };
 
 export default function RootLayout({

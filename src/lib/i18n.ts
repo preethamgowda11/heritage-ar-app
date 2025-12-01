@@ -3,17 +3,17 @@ import type { Language } from '@/types';
 
 const dictionary: Record<string, Record<Language, string>> = {
   // Header
-  'heritage_lens': {
-    'en': 'Heritage Lens',
-    'hi': 'विरासत लेंस',
-    'kn': 'ಹೆರಿಟೇಜ್ ಲೆನ್ಸ್',
+  'bharat_heritage': {
+    'en': 'Bharat Heritage',
+    'hi': 'भारत विरासत',
+    'kn': 'ಭಾರತ್ ಹೆರಿಟೇಜ್',
   },
 
   // Home Page
   'home_title': {
-    'en': 'Heritage Lens',
-    'hi': 'विरासत लेंस',
-    'kn': 'ಹೆರಿಟೇಜ್ ಲೆನ್ಸ್',
+    'en': 'Bharat Heritage',
+    'hi': 'भारत विरासत',
+    'kn': 'ಭಾರತ್ ಹೆರಿಟೇಜ್',
   },
   'home_subtitle': {
     'en': "Step into the past. Explore India's magnificent cultural heritage in stunning augmented reality.",

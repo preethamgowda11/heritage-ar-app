@@ -22,7 +22,7 @@ export function Header() {
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Logo />
             <span className="hidden font-bold sm:inline-block font-headline text-lg">
-              {t('heritage_lens')}
+              {t('bharat_heritage')}
             </span>
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-2">
