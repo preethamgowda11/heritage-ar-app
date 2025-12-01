@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heritage Lens - AR Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+    ></script>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        --ar-button-display: none;
+      }
+      #back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      #back-button svg {
+        width: 24px;
+        height: 24px;
+      }
+       #tts-button {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        padding: 12px 20px;
+        background-color: #ff9933;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-family: sans-serif;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+      #tts-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="back-button" onclick="window.history.back()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5"></path>
+        <path d="M12 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <model-viewer
+      id="ar-viewer"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      camera-controls
+      auto-rotate
+    >
+    </model-viewer>
+
+    <button id="tts-button" onclick="playDescriptionWithLuvVoice()">
+      Read Description
+    </button>
+
+    <script>
+      const modelViewer = document.getElementById('ar-viewer');
+      const ttsButton = document.getElementById('tts-button');
+      let audio = null;
+      let isPlaying = false;
+      let currentBlobUrl = null;
+
+      const params = new URLSearchParams(window.location.search);
+      const modelUrl = params.get('model');
+      
+      const siteDescription = sessionStorage.getItem('ar_site_description');
+      if (!siteDescription) {
+          ttsButton.disabled = true;
+          ttsButton.innerText = 'No Description Available';
+      }
+
+      if (modelUrl) {
+        modelViewer.src = modelUrl;
+
+        // Try to activate AR automatically.
+        modelViewer.addEventListener(
+          'load',
+          () => {
+            modelViewer.activateAR().catch((error) => {
+              console.error('Failed to activate AR automatically:', error);
+            });
+          },
+          {once: true}
+        );
+      } else {
+        console.error('No model URL provided in query parameters.');
+      }
+      
+      async function playDescriptionWithLuvVoice() {
+        if (isPlaying) {
+          if (audio) {
+            audio.pause();
+          }
+          ttsButton.innerText = 'Read Description';
+          isPlaying = false;
+          return;
+        }
+
+        const text = sessionStorage.getItem('ar_site_description');
+        const lang = sessionStorage.getItem('ar_site_lang') || 'en';
+
+        if (!text) {
+          console.warn('No description found');
+          return;
+        }
+
+        ttsButton.disabled = true;
+        ttsButton.innerText = 'Loading...';
+
+        try {
+          const resp = await fetch('/api/generate-audio', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text, lang}),
+          });
+
+          if (!resp.ok) {
+            console.error('TTS failed', resp.status);
+            ttsButton.innerText = 'Error';
+            return;
+          }
+
+          const ab = await resp.arrayBuffer();
+          const blob = new Blob([ab], {type: 'audio/mpeg'});
+          
+          if (currentBlobUrl) {
+            URL.revokeObjectURL(currentBlobUrl);
+          }
+          currentBlobUrl = URL.createObjectURL(blob);
+
+          if (!audio) {
+            audio = document.createElement('audio');
+            audio.id = '__luvvoice_audio';
+            document.body.appendChild(audio);
+            audio.addEventListener('ended', () => {
+              isPlaying = false;
+              ttsButton.innerText = 'Read Description';
+              ttsButton.disabled = false;
+            });
+            audio.addEventListener('pause', () => {
+              if (audio.currentTime !== audio.duration) {
+                  isPlaying = false;
+                  ttsButton.innerText = 'Read Description';
+                  ttsButton.disabled = false;
+              }
+            });
+          }
+
+          audio.src = currentBlobUrl;
+          await audio.play();
+          ttsButton.innerText = 'Pause Description';
+          isPlaying = true;
+
+        } catch (err) {
+          console.error('TTS error', err);
+          ttsButton.innerText = 'Error';
+        } finally {
+            if (ttsButton.innerText !== 'Pause Description') {
+               ttsButton.disabled = false;
+            }
+        }
+      }
+    </script>
+  </body>
+</html>
