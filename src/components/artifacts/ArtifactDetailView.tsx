@@ -17,44 +17,13 @@ import { useRouter } from 'next/navigation';
 
 interface ArtifactDetailViewProps {
   artifact: Artifact;
-  launchAR: boolean;
 }
 
-export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: ArtifactDetailViewProps) {
+export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedArtifactData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { t, language } = useTranslation();
-  const router = useRouter();
-
-  const modelIdMap: { [key: string]: string } = {
-    'art-1': 'mughal-painting',
-    'art-2': 'vijayanagara-coin',
-    'art-3': 'iron-pillar',
-    'art-4': 'lakshmi-narasimha',
-    'art-5': 'harihara',
-    'art-6': 'chhau-mask',
-    'art-7': 'konark-wheel',
-  };
-  const modelId = modelIdMap[artifact.id];
-
-  const handleLaunchAR = () => {
-    if (optimizedData?.title && optimizedData?.description) {
-        sessionStorage.setItem('ar_title', optimizedData.title);
-        sessionStorage.setItem('ar_description', optimizedData.description);
-        sessionStorage.setItem('ar_lang', language);
-    }
-    router.push(`/ar-view/index.html?modelId=${modelId}`);
-  };
-
-  useEffect(() => {
-    if (initialLaunchAR && modelId) {
-      if (optimizedData) {
-        handleLaunchAR();
-      }
-    }
-  }, [initialLaunchAR, modelId, optimizedData]);
-
 
   useEffect(() => {
     const processContent = async () => {
@@ -103,17 +72,11 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
-        {modelId && optimizedData.modelUrl && (
-             <Button onClick={handleLaunchAR}>
-                <View className="mr-2 h-4 w-4" />
-                {t('launch_ar')}
-            </Button>
-        )}
       </div>
 
       <div className="mb-8">
         {optimizedData.modelUrl ? (
-          <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={artifact.imageUrlId} />
+          <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={artifact.imageUrlId} ar />
         ) : (
           <p className="text-center p-8 bg-muted rounded-lg">3D Model not available in low bandwidth mode. Showing fallback image.</p>
         )}

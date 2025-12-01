@@ -4,17 +4,14 @@ import { SiteDetailView } from '@/components/sites/SiteDetailView';
 
 interface SiteDetailPageProps {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function SiteDetailPage({ params, searchParams }: SiteDetailPageProps) {
+export default async function SiteDetailPage({ params }: SiteDetailPageProps) {
   const site = getSiteById(params.id);
 
   if (!site) {
     notFound();
   }
   
-  const launchAR = searchParams?.ar === 'true';
-
-  return <SiteDetailView site={site} launchAR={launchAR} />;
+  return <SiteDetailView site={site} />;
 }

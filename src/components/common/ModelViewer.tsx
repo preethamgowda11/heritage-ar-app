@@ -8,9 +8,10 @@ interface ModelViewerProps {
   iosSrc?: string;
   alt: string;
   posterId?: string;
+  ar?: boolean;
 }
 
-export function ModelViewer({ src, iosSrc, alt, posterId }: ModelViewerProps) {
+export function ModelViewer({ src, iosSrc, alt, posterId, ar = false }: ModelViewerProps) {
   const { theme } = useUserPreferences();
   const posterImage = posterId ? PlaceHolderImages.find(p => p.id === posterId)?.imageUrl : undefined;
 
@@ -20,7 +21,7 @@ export function ModelViewer({ src, iosSrc, alt, posterId }: ModelViewerProps) {
         src={src}
         ios-src={iosSrc}
         alt={alt}
-        ar
+        ar={ar}
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
         auto-rotate

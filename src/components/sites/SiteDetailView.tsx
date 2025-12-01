@@ -10,7 +10,7 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Gem, View } from 'lucide-react';
+import { ArrowLeft, Gem, Image as ImageIcon } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
@@ -19,47 +19,14 @@ import { useRouter } from 'next/navigation';
 
 interface SiteDetailViewProps {
   site: Site;
-  launchAR: boolean;
 }
 
-export function SiteDetailView({ site, launchAR: initialLaunchAR }: SiteDetailViewProps) {
+export function SiteDetailView({ site }: SiteDetailViewProps) {
   const { isLowBandwidth, isAccessibilityOn, isAudioOn } = useUserPreferences();
   const [optimizedData, setOptimizedData] = useState<OptimizeContentOutput['optimizedSiteData'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { t, language } = useTranslation();
-  const router = useRouter();
   
-  const modelIdMap: { [key: string]: string } = {
-    'site-1': 'taj',
-    'site-2': 'hampi',
-    'site-3': 'qutub',
-    'site-4': 'konark',
-    'site-6': 'rani-ki-vav',
-    'site-7': 'charminar',
-    'site-8': 'jagannath-puri',
-    'site-9': 'ellora-caves',
-    'site-10': 'sanchi-stupa',
-  };
-  const modelId = modelIdMap[site.id];
-
-  const handleLaunchAR = () => {
-    if (optimizedData?.title && optimizedData?.longDescription) {
-        sessionStorage.setItem('ar_title', optimizedData.title);
-        sessionStorage.setItem('ar_description', optimizedData.longDescription);
-        sessionStorage.setItem('ar_lang', language);
-    }
-    router.push(`/ar-view/index.html?modelId=${modelId}`);
-  };
-
-  useEffect(() => {
-    if (initialLaunchAR && modelId) {
-        if (optimizedData) {
-            handleLaunchAR();
-        }
-    }
-  }, [initialLaunchAR, modelId, optimizedData]);
-
-
   useEffect(() => {
     const processContent = async () => {
       setIsLoading(true);
@@ -95,6 +62,8 @@ export function SiteDetailView({ site, launchAR: initialLaunchAR }: SiteDetailVi
         hint: PlaceHolderImages.find(p => p.imageUrl === optimizedData.coverImageUrl)?.imageHint || 'heritage site'
       }
     : null;
+    
+  const fallback360Image = PlaceHolderImages.find(p => p.id === site.fallback360UrlId);
 
   if (isLoading) {
     return <SiteDetailSkeleton />;
@@ -117,17 +86,19 @@ export function SiteDetailView({ site, launchAR: initialLaunchAR }: SiteDetailVi
         <Button asChild variant="outline" size="sm">
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
-        {modelId && (
-            <Button onClick={handleLaunchAR}>
-                <View className="mr-2 h-4 w-4" />
-                {t('launch_ar')}
+        {fallback360Image && (
+            <Button asChild variant="outline">
+                <a href={fallback360Image.imageUrl} target="_blank" rel="noopener noreferrer">
+                    <ImageIcon className="mr-2 h-4 w-4" />
+                    360 View
+                </a>
             </Button>
         )}
       </div>
       
       {optimizedData.modelUrl && (
         <div className="mb-8">
-          <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={site.coverImageUrlId} />
+          <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={site.coverImageUrlId} ar />
         </div>
       )}
 

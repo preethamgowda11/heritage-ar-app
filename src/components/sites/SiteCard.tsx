@@ -22,18 +22,6 @@ interface SiteCardProps {
 export function SiteCard({ site }: SiteCardProps) {
   const { t, language } = useTranslation();
   const thumbnail = PlaceHolderImages.find(p => p.id === site.thumbnailUrlId);
-  const modelIdMap: { [key: string]: string } = {
-    'site-1': 'taj',
-    'site-2': 'hampi',
-    'site-3': 'qutub',
-    'site-4': 'konark',
-    'site-6': 'rani-ki-vav',
-    'site-7': 'charminar',
-    'site-8': 'jagannath-puri',
-    'site-9': 'ellora-caves',
-    'site-10': 'sanchi-stupa',
-  };
-  const modelId = modelIdMap[site.id];
 
   return (
     <Card className="flex flex-col overflow-hidden h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -55,21 +43,13 @@ export function SiteCard({ site }: SiteCardProps) {
         <CardTitle className="font-headline text-xl mb-2">{site.title[language]}</CardTitle>
         <CardDescription>{site.shortDescription[language]}</CardDescription>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between gap-2">
+      <CardFooter className="p-4 pt-0 flex justify-end gap-2">
         <Button asChild size="sm" variant="outline">
           <Link href={`/sites/${site.id}`}>
             {t('details')}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
-        {modelId && (
-          <Button asChild size="sm">
-            <Link href={`/ar-view/index.html?modelId=${modelId}`}>
-              {t('launch_ar')}
-              <View className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
       </CardFooter>
     </Card>
   );
