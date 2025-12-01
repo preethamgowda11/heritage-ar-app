@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Site } from '@/types';
@@ -11,11 +11,9 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Gem, Image as ImageIcon, View } from 'lucide-react';
-import { ModelViewer } from '@/components/common/ModelViewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
-import { useRouter } from 'next/navigation';
 
 interface SiteDetailViewProps {
   site: Site;
@@ -96,19 +94,19 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         )}
       </div>
       
-      {optimizedData.modelUrl && (
-        <div className="mb-8">
-          <ModelViewer src={optimizedData.modelUrl} alt={`3D model of ${optimizedData.title}`} posterId={site.coverImageUrlId} ar />
-        </div>
-      )}
-
-      {!optimizedData.modelUrl && coverImage && (
-         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg">
-            <Image src={coverImage.url} alt={`Cover image of ${optimizedData.title}`} fill className="object-cover" data-ai-hint={coverImage.hint} />
+      {coverImage && (
+         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg bg-muted">
+            <Image 
+              src={coverImage.url} 
+              alt={`Cover image of ${optimizedData.title}`} 
+              fill 
+              className="object-cover" 
+              data-ai-hint={coverImage.hint}
+              priority
+            />
          </div>
       )}
       
-
       <header className="mb-6 text-center">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{optimizedData.title}</h1>
       </header>
@@ -166,7 +164,10 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
 function SiteDetailSkeleton() {
   return (
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
-      <Skeleton className="h-8 w-36 mb-6" />
+      <div className="flex justify-between items-center mb-6">
+        <Skeleton className="h-9 w-36" />
+        <Skeleton className="h-9 w-28" />
+      </div>
       <Skeleton className="w-full h-96 rounded-lg mb-8" />
       <div className="text-center mb-6">
         <Skeleton className="h-12 w-1/2 mx-auto" />
