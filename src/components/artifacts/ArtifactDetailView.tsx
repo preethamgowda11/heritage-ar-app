@@ -11,7 +11,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
-import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
 import { useRouter } from 'next/navigation';
 
@@ -35,7 +34,6 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
           imageUrl: PlaceHolderImages.find(p => p.id === artifact.imageUrlId)?.imageUrl,
           modelFileUrl: artifact.modelFileUrl,
           fallbackImageUrl: PlaceHolderImages.find(p => p.id === artifact.fallbackImageUrlId)?.imageUrl,
-          audioNarrationUrl: artifact.audioNarrationUrl,
         },
         userPreferences: {
           lowBandwidth: isLowBandwidth,
@@ -89,10 +87,6 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
       <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
         <p>{optimizedData.description}</p>
       </article>
-
-      <div className="my-6">
-        <SpeechSynthesisPlayer text={optimizedData.description || ''} />
-      </div>
 
     </div>
   );

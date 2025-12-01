@@ -12,7 +12,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Gem, Image as ImageIcon, View } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
 
 interface SiteDetailViewProps {
@@ -126,10 +125,6 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
           </Button>
         </div>
       )}
-
-      <div className="my-6">
-        <SpeechSynthesisPlayer text={optimizedData.longDescription || ''} />
-      </div>
       
       {site.artifacts.length > 0 && (
         <div className="mt-12">

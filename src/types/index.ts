@@ -10,7 +10,6 @@ export interface Site {
   lowPolyModelUrl: string;
   highPolyModelUrl: string;
   fallback360UrlId: string;
-  audioNarrationUrl: string;
   artifacts: Artifact[];
 }
 
@@ -22,7 +21,6 @@ export interface Artifact {
   imageUrlId: string;
   modelFileUrl: string;
   fallbackImageUrlId: string;
-  audioNarrationUrl: string;
 }
 
 export interface UserPreferences {

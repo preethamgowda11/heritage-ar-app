@@ -22,7 +22,6 @@ const OptimizeContentInputSchema = z.object({
     lowPolyModelUrl: z.string().optional(),
     highPolyModelUrl: z.string().optional(),
     fallback360Url: z.string().optional(),
-    audioNarrationUrl: z.string().optional(),
   }).optional(),
   artifactData: z.object({
     title: z.string().optional(),
@@ -30,7 +29,6 @@ const OptimizeContentInputSchema = z.object({
     imageUrl: z.string().optional(),
     modelFileUrl: z.string().optional(),
     fallbackImageUrl: z.string().optional(),
-    audioNarrationUrl: z.string().optional(),
   }).optional(),
   userPreferences: z.object({
     lowBandwidth: z.boolean().optional(),
@@ -84,7 +82,6 @@ const prompt = ai.definePrompt({
   Site High Poly Model URL: {{siteData.highPolyModelUrl}}
   Site Low Poly Model URL: {{siteData.lowPolyModelUrl}}
   Site Fallback 360 URL: {{siteData.fallback360Url}}
-  Site Audio Narration URL: {{siteData.audioNarrationUrl}}
   {{else}}
   No site data provided.
   {{/if}}
@@ -96,7 +93,6 @@ const prompt = ai.definePrompt({
   Artifact Image URL: {{artifactData.imageUrl}}
   Artifact Model File URL: {{artifactData.modelFileUrl}}
   Artifact Fallback Image URL: {{artifactData.fallbackImageUrl}}
-  Artifact Audio Narration URL: {{artifactData.audioNarrationUrl}}
   {{else}}
   No artifact data provided.
   {{/if}}
@@ -132,13 +128,13 @@ const optimizeContentFlow = ai.defineFlow(
         ...output.optimizedSiteData,
         modelUrl: input.userPreferences?.lowBandwidth ? input.siteData?.lowPolyModelUrl : input.siteData?.highPolyModelUrl,
         fallbackUrl: input.siteData?.fallback360Url,
-        audioNarrationUrl: (input.userPreferences?.accessibilityOn && input.userPreferences?.audioOn) ? input.siteData?.audioNarrationUrl : null,
+        audioNarrationUrl: null,
       },
       optimizedArtifactData: {
         ...output.optimizedArtifactData,
         modelUrl: input.userPreferences?.lowBandwidth ? null : input.artifactData?.modelFileUrl, //No low poly model defined for artifacts
         fallbackImageUrl: input.artifactData?.fallbackImageUrl,
-        audioNarrationUrl: (input.userPreferences?.accessibilityOn && input.userPreferences?.audioOn) ? input.artifactData?.audioNarrationUrl : null,
+        audioNarrationUrl: null,
       },
     } : {};
     return optimizedOutput as OptimizeContentOutput;
