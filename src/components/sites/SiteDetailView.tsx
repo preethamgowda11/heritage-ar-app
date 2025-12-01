@@ -87,7 +87,7 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         </Button>
         {optimizedData.modelUrl && (
           <Button asChild>
-            <a href={arUrl} target="_blank" rel="noopener noreferrer">
+            <a href={arUrl}>
               <View className="mr-2 h-4 w-4" />
               {t('launch_ar')}
             </a>
