@@ -1,3 +1,4 @@
+
 import type { Language } from '@/types';
 
 const dictionary: Record<string, Record<Language, string>> = {
@@ -95,16 +96,6 @@ const dictionary: Record<string, Record<Language, string>> = {
     'hi': 'संबंधित कलाकृतियाँ',
     'kn': 'ಸಂಬಂಧಿತ ಕಲಾಕೃತಿಗಳು',
   },
-  'historical_narration': {
-    'en': 'Historical Narration',
-    'hi': 'ऐतिहासिक वर्णन',
-    'kn': 'ಐತಿಹಾಸಿಕ ನಿರೂಪಣೆ',
-  },
-  'audio_description': {
-    'en': 'Audio Description',
-    'hi': 'ऑडियो विवरण',
-    'kn': 'ಆಡಿಯೋ ವಿವರಣೆ',
-  },
   'read_description_aloud': {
     'en': 'Read description aloud',
     'hi': 'विवरण जोर से पढ़ें',
@@ -119,7 +110,7 @@ const dictionary: Record<string, Record<Language, string>> = {
   },
   'customize_experience': {
     'en': 'Customize your experience for your needs.',
-    'hi': 'अपनी आवश्यकताओं के लिए अपने अनुभव को अनुकूलित करें।',
+    'hi': ' अपनी आवश्यकताओं के लिए अपने अनुभव को अनुकूलित करें।',
     'kn': 'ನಿಮ್ಮ ಅಗತ್ಯಗಳಿಗಾಗಿ ನಿಮ್ಮ ಅನುಭವವನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.',
   },
   'enable_accessibility_mode': {

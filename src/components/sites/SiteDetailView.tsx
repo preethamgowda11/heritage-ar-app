@@ -12,7 +12,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Gem, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
-import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
@@ -162,15 +161,6 @@ export function SiteDetailView({ site, launchAR }: SiteDetailViewProps) {
         </div>
       )}
       
-      {optimizedData.audioNarrationUrl && (
-        <div className="mt-8">
-            <h3 className="text-2xl font-headline mb-4">{t('historical_narration')}</h3>
-            <Suspense fallback={<Skeleton className="h-20 w-full" />}>
-              <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={isAccessibilityOn && isAudioOn} />
-            </Suspense>
-        </div>
-      )}
-
       {site.artifacts.length > 0 && (
         <div className="mt-12">
             <h3 className="text-2xl font-headline mb-4 text-center">{t('related_artifacts')}</h3>

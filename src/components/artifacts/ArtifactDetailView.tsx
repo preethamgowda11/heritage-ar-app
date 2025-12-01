@@ -11,7 +11,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
-import { AudioPlayer } from '@/components/common/AudioPlayer';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -125,14 +124,6 @@ export function ArtifactDetailView({ artifact, launchAR: initialLaunchAR }: Arti
         <SpeechSynthesisPlayer text={optimizedData.description || ''} />
       </div>
 
-      {optimizedData.audioNarrationUrl && (
-        <div className="mt-8">
-            <h3 className="text-2xl font-headline mb-4">{t('audio_description')}</h3>
-            <Suspense fallback={<Skeleton className="h-20 w-full" />}>
-              <AudioPlayer src={optimizedData.audioNarrationUrl} autoPlay={initialLaunchAR || (isAccessibilityOn && isAudioOn)} />
-            </Suspense>
-        </div>
-      )}
     </div>
   );
 }
