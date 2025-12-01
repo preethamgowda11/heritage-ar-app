@@ -38,7 +38,6 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
           lowPolyModelUrl: site.lowPolyModelUrl,
           highPolyModelUrl: site.highPolyModelUrl,
           fallback360Url: PlaceHolderImages.find(p => p.id === site.fallback360UrlId)?.imageUrl,
-          audioNarrationUrl: site.audioNarrationUrl,
         },
         userPreferences: {
           lowBandwidth: isLowBandwidth,
@@ -77,6 +76,8 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
       </div>
     );
   }
+  
+  const arUrl = `/ar-viewer.html?model=${encodeURIComponent(optimizedData.modelUrl || '')}`;
 
   return (
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
@@ -86,7 +87,7 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         </Button>
         {optimizedData.modelUrl && (
           <Button asChild>
-            <a href={optimizedData.modelUrl} target="_blank" rel="noopener noreferrer">
+            <a href={arUrl} target="_blank" rel="noopener noreferrer">
               <View className="mr-2 h-4 w-4" />
               {t('launch_ar')}
             </a>
