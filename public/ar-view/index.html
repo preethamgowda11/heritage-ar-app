@@ -1,295 +1,279 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>AR Viewer — WebXR</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
-  <style>
-    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:Inter,Roboto,Arial}
-    #ar-root{position:fixed;inset:0;background:transparent}
-    #status{position:fixed;left:50%;top:18px;transform:translateX(-50%);padding:8px 12px;border-radius:8px;background:rgba(0,0,0,0.6);z-index:60}
-    #placeBtn{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);padding:12px 18px;font-size:16px;border-radius:8px;background:#0b5fff;color:#fff;border:none;z-index:60;display:none}
-    .panel{position:fixed;left:0;right:0;bottom:0;background:rgba(3,7,18,0.78);display:flex;align-items:center;justify-content:space-between;padding:10px;gap:12px;z-index:40}
-    .title{font-weight:700;font-size:16px}
-    .desc{font-size:13px;opacity:.9;max-height:44px;overflow:hidden;text-overflow:ellipsis;width:60vw}
-    button{cursor:pointer;background:rgba(255,255,255,0.08);border:0;color:#fff;padding:8px;border-radius:8px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Lens - AR View</title>
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: white;
+            background-color: #000;
+        }
+        #ar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        #ui-overlay * {
+            pointer-events: all;
+        }
+        #info-card {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            max-width: 90%;
+            align-self: center;
+        }
+        #info-card h1 {
+            font-size: 1.5em;
+            margin: 0 0 8px 0;
+        }
+        #info-card p {
+            font-size: 1em;
+            margin: 0;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        #bottom-bar {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        #back-button, #ar-button {
+            padding: 12px 24px;
+            border-radius: 24px;
+            border: 1px solid white;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #ar-button.ar-started {
+            display: none;
+        }
+        #reticle {
+            position: fixed;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 2px solid white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+        }
+    }
+    </script>
 </head>
 <body>
-  <div id="ar-root"></div>
-
-  <div id="status">Ready — tap AR to begin</div>
-  <button id="placeBtn">Tap to place</button>
-
-  <div class="panel" id="infoPanel">
-    <div>
-      <div id="siteTitle" class="title">Title</div>
-      <div id="siteDesc" class="desc">Description</div>
+    <div id="ar-container"></div>
+    <div id="ui-overlay">
+        <div id="info-card">
+            <h1 id="ar-title">Loading...</h1>
+            <p id="ar-description">Please wait while we prepare the AR experience.</p>
+        </div>
+        <div id="bottom-bar">
+            <button id="back-button">Back</button>
+            <button id="ar-button">Start AR</button>
+        </div>
     </div>
-    <div>
-      <button id="btnPlay">▶</button>
-      <button id="btnPause">⏸</button>
-      <button id="btnReset">Reset</button>
-    </div>
-  </div>
+    <div id="reticle"></div>
 
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.156.0/build/three.module.js';
-    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/loaders/GLTFLoader.js';
-    import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/webxr/ARButton.js';
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { ARButton } from 'three/addons/webxr/ARButton.js';
 
-    // helpers
-    const statusEl = document.getElementById('status');
-    const placeBtn = document.getElementById('placeBtn');
-    const titleEl = document.getElementById('siteTitle');
-    const descEl = document.getElementById('siteDesc');
-    const btnPlay = document.getElementById('btnPlay');
-    const btnPause = document.getElementById('btnPause');
-    const btnReset = document.getElementById('btnReset');
+        let container, camera, scene, renderer, controller;
+        let reticle;
+        let hitTestSource = null;
+        let hitTestSourceRequested = false;
+        let model;
 
-    function setStatus(t){ statusEl.innerText = t; }
-
-    const modelMap = {
-      'taj': '/models/taj_mahal_3d_model.glb',
-      'qutub': '/models/qutub_minar.glb',
-      'konark': '/models/sun_temple.glb',
-      'hampi': '/models/hampi_high.glb',
-      'mughal-painting': '/models/mughal_painting.glb',
-      'vijayanagara-coin': '/models/vijayanagara_coin.glb',
-      'iron-pillar': '/models/iron_pillar_inscription.glb',
-      'rani-ki-vav': '/models/rani-ki-vav.glb',
-      'charminar': '/models/charminar_hyderabad.glb',
-      'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
-      'ellora-caves': '/models/ellora_caves__india.glb',
-      'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
-      'lakshmi-narasimha': '/models/lakshmi_narasimha.glb',
-      'harihara': '/models/harihara_statue.glb',
-      'chhau-mask': '/models/chhau_mask.glb',
-      'konark-wheel': '/models/konark_wheel.glb'
-    };
-
-    // restore preserved text (the SiteDetail saved these before redirect)
-    const preservedTitle = sessionStorage.getItem('ar_title') || '';
-    const preservedDesc = sessionStorage.getItem('ar_description') || '';
-    const preservedLang = sessionStorage.getItem('ar_lang') || 'en';
-
-    if (preservedTitle) titleEl.innerText = preservedTitle;
-    if (preservedDesc) descEl.innerText = preservedDesc;
-
-    // resolve model url
-    function queryParam(name) {
-      try { const url = new URL(window.location.href); return url.searchParams.get(name); } catch (e) { return null; }
-    }
-    const modelId = queryParam('modelId');
-    const modelUrl = modelMap[modelId] || null;
-
-    if (!modelUrl) {
-      setStatus('No model found for this ID.');
-    }
-
-    // Three.js + WebXR initialization
-    let renderer, scene, camera;
-    let reticle, controller;
-    let loader = new GLTFLoader();
-    let modelRoot, currentModel = null;
-    let hitTestSource = null;
-    let modelPlaced = false;
-
-    // Animation mixer
-    let mixer;
-    const clock = new THREE.Clock();
-
-    function init() {
-      renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.xr.enabled = true;
-      document.getElementById('ar-root').appendChild(renderer.domElement);
-
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera();
-
-      const light = new THREE.AmbientLight(0xffffff, 2.0);
-      scene.add(light);
-      const hemi = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 2.0);
-      scene.add(hemi);
-
-      modelRoot = new THREE.Group();
-      modelRoot.visible = false;
-      scene.add(modelRoot);
-
-      // reticle
-      const geo = new THREE.RingGeometry(0.08, 0.12, 32).rotateX(-Math.PI/2);
-      const mat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      reticle = new THREE.Mesh(geo, mat);
-      reticle.matrixAutoUpdate = false;
-      reticle.visible = false;
-      scene.add(reticle);
-
-      const arButton = ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
-      document.body.appendChild(arButton);
-
-      controller = renderer.xr.getController(0);
-      controller.addEventListener('select', onSelect);
-      scene.add(controller);
-
-      renderer.setAnimationLoop(render);
-      setStatus('Tap AR button to start');
-      window.addEventListener('resize', onWindowResize);
-    }
-
-    function onWindowResize(){
-      if (!renderer || !camera) return;
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    async function loadGLB(url) {
-      return new Promise((resolve, reject) => {
-        loader.load(url, gltf => resolve(gltf), undefined, err => reject(err));
-      });
-    }
-
-    async function onSelect() {
-      if (!reticle.visible) return;
-      if (!currentModel) {
-        if (!modelUrl) { setStatus('No model URL available.'); return; }
-        setStatus('Loading model...');
-        try {
-          const gltf = await loadGLB(modelUrl);
-          currentModel = gltf.scene || gltf.scenes[0];
-
-          // Fit model to a 1x1x1 box for consistent scaling
-          const box = new THREE.Box3().setFromObject(currentModel);
-          const size = box.getSize(new THREE.Vector3());
-          const scale = 1.0 / Math.max(size.x, size.y, size.z);
-          currentModel.scale.set(scale, scale, scale);
-
-          modelRoot.add(currentModel);
-
-          if (gltf.animations && gltf.animations.length) {
-            mixer = new THREE.AnimationMixer(currentModel);
-            const action = mixer.clipAction(gltf.animations[0]);
-            action.play();
-          }
-
-        } catch (e) {
-          console.error('Failed to load GLB', e);
-          setStatus('Failed to load model.');
-          return;
+        const modelUrls = {
+            'taj': '/models/taj_mahal_3d_model.glb',
+            'hampi': '/models/stone_chariot_in_hampi.glb',
+            'qutub': '/models/qutub_minar.glb',
+            'konark': '/models/sun_temple.glb',
+            'rani-ki-vav': '/models/rani-ki-vav.glb',
+            'charminar': '/models/charminar_hyderabad.glb',
+            'jagannath-puri': '/models/jagannath_puri_temple_model.glb',
+            'ellora-caves': '/models/ellora_caves__india.glb',
+            'sanchi-stupa': '/models/great_stupa_in_sanchi.glb',
+            'mughal-painting': '/models/mughal_painting.glb',
+            'vijayanagara-coin': '/models/vijayanagara_coin.glb',
+            'iron-pillar': '/models/iron_pillar_inscription.glb',
+            'lakshmi-narasimha': '/models/lakshmi_narasimha.glb',
+            'harihara': '/models/harihara_statue.glb',
+            'chhau-mask': '/models/chhau_mask.glb',
+            'konark-wheel': '/models/konark_wheel.glb',
+        };
+        
+        function getModelUrlFromQuery() {
+            const params = new URLSearchParams(window.location.search);
+            const modelId = params.get('modelId');
+            return modelUrls[modelId] || null;
         }
-      }
-      // place
-      modelRoot.position.setFromMatrixPosition(reticle.matrix);
-      modelRoot.visible = true;
-      modelPlaced = true;
-      placeBtn.style.display = 'none';
-      setStatus('Model placed. Pinch to zoom, drag to move.');
-    }
-    
-    let initialPinchDistance = 0;
-    let initialScale = 1;
-    let activeTouches = {};
 
-    function getDistance(touches) {
-      return Math.hypot(touches[0].pageX - touches[1].pageX, touches[0].pageY - touches[1].pageY);
-    }
+        init();
+        animate();
 
-    window.addEventListener('touchstart', (e) => {
-      for (let i = 0; i < e.changedTouches.length; i++) {
-        activeTouches[e.changedTouches[i].identifier] = { x: e.changedTouches[i].pageX, y: e.changedTouches[i].pageY };
-      }
-      if (Object.keys(activeTouches).length === 2 && modelPlaced) {
-        initialPinchDistance = getDistance(Object.values(activeTouches));
-        initialScale = modelRoot.scale.x;
-      }
-    });
+        function init() {
+            container = document.getElementById('ar-container');
 
-    window.addEventListener('touchmove', (e) => {
-       if (Object.keys(activeTouches).length === 2 && modelPlaced) {
-        for (let i = 0; i < e.changedTouches.length; i++) {
-            if(activeTouches[e.changedTouches[i].identifier]) {
-              activeTouches[e.changedTouches[i].identifier] = { x: e.changedTouches[i].pageX, y: e.changedTouches[i].pageY };
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+
+            const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
+            light.position.set(0.5, 1, 0.25);
+            scene.add(light);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.xr.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Custom AR button logic
+            const arButton = document.getElementById('ar-button');
+            const arButtonInstance = ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
+            arButton.addEventListener('click', () => {
+                arButtonInstance.click();
+            });
+
+            renderer.xr.addEventListener('sessionstart', () => {
+                document.getElementById('info-card').style.display = 'none';
+                arButton.classList.add('ar-started');
+                document.getElementById('reticle').style.display = 'block';
+            });
+            renderer.xr.addEventListener('sessionend', () => {
+                document.getElementById('info-card').style.display = 'block';
+                arButton.classList.remove('ar-started');
+                document.getElementById('reticle').style.display = 'none';
+                if(model) model.visible = false;
+            });
+
+
+            function onSelect() {
+                if (reticle.visible && !model) {
+                    const modelUrl = getModelUrlFromQuery();
+                    if (!modelUrl) {
+                        console.error("No model URL found for this ID.");
+                        document.getElementById('ar-description').textContent = "Error: Model not found.";
+                        return;
+                    }
+
+                    const loader = new GLTFLoader();
+                    loader.load(modelUrl, (gltf) => {
+                        model = gltf.scene;
+                        
+                        const box = new THREE.Box3().setFromObject(model);
+                        const size = box.getSize(new THREE.Vector3());
+                        const scale = 0.5 / size.y; // Scale to 0.5m tall
+                        model.scale.set(scale, scale, scale);
+
+                        model.position.setFromMatrixPosition(reticle.matrix);
+                        model.visible = true;
+                        scene.add(model);
+                    });
+                }
             }
+
+            controller = renderer.xr.getController(0);
+            controller.addEventListener('select', onSelect);
+            scene.add(controller);
+
+            reticle = new THREE.Mesh(
+                new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
+                new THREE.MeshBasicMaterial()
+            );
+            reticle.matrixAutoUpdate = false;
+            reticle.visible = false;
+            scene.add(reticle);
+
+            window.addEventListener('resize', onWindowResize);
+
+            // Back button
+            document.getElementById('back-button').addEventListener('click', () => {
+                window.history.back();
+            });
+
+            // Populate UI from sessionStorage
+            const title = sessionStorage.getItem('ar_title');
+            const description = sessionStorage.getItem('ar_description');
+            if (title) document.getElementById('ar-title').textContent = title;
+            if (description) document.getElementById('ar-description').textContent = description;
         }
-        const newDist = getDistance(Object.values(activeTouches));
-        const scale = initialScale * (newDist / initialPinchDistance);
-        modelRoot.scale.set(scale, scale, scale);
-      }
-    });
 
-    window.addEventListener('touchend', (e) => {
-       for (let i = 0; i < e.changedTouches.length; i++) {
-         delete activeTouches[e.changedTouches[i].identifier];
-       }
-    });
-
-
-    renderer.xr.addEventListener('sessionstart', async () => {
-      setStatus('Searching for surfaces...');
-      const session = renderer.xr.getSession();
-      const viewerSpace = await session.requestReferenceSpace('viewer');
-      hitTestSource = await session.requestHitTestSource({ space: viewerSpace });
-    });
-
-    renderer.xr.addEventListener('sessionend', () => {
-      setStatus('AR session ended');
-      hitTestSource = null;
-      reticle.visible = false;
-      modelPlaced = false;
-      placeBtn.style.display = 'none';
-    });
-
-    function render(time, frame) {
-      if (frame && hitTestSource) {
-        const hits = frame.getHitTestResults(hitTestSource);
-        if (hits.length > 0) {
-          const hit = hits[0];
-          const pose = hit.getPose(renderer.xr.getReferenceSpace());
-          reticle.visible = true;
-          reticle.matrix.fromArray(pose.transform.matrix);
-          if (!modelPlaced) {
-            placeBtn.style.display = 'block';
-            setStatus('Surface found — tap button to place');
-          }
-        } else {
-          reticle.visible = false;
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         }
-      }
 
-      if (mixer) {
-        mixer.update(clock.getDelta());
-      }
-      renderer.render(scene, camera);
-    }
+        function animate() {
+            renderer.setAnimationLoop(render);
+        }
 
-    // Controls
-    btnPlay.addEventListener('click', () => {
-      const txt = preservedDesc || descEl.innerText;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(txt);
-        u.lang = preservedLang === 'hi' ? 'hi-IN' : (preservedLang === 'kn' ? 'kn-IN' : 'en-US');
-        window.speechSynthesis.speak(u);
-      }
-    });
-    btnPause.addEventListener('click', () => { if ('speechSynthesis' in window) window.speechSynthesis.pause(); });
-    btnReset.addEventListener('click', () => {
-      if (modelRoot) { modelRoot.visible = false; }
-      if (currentModel) {
-          modelRoot.remove(currentModel);
-          currentModel = null;
-      }
-      if(mixer) mixer = null;
-      modelPlaced = false;
-      setStatus('Model reset. Find a surface to place again.');
-    });
+        function render(timestamp, frame) {
+            if (frame) {
+                const referenceSpace = renderer.xr.getReferenceSpace();
+                const session = renderer.xr.getSession();
 
-    placeBtn.addEventListener('click', () => { if (reticle.visible) onSelect(); });
+                if (hitTestSourceRequested === false) {
+                    session.requestReferenceSpace('viewer').then((referenceSpace) => {
+                        session.requestHitTestSource({ space: referenceSpace }).then((source) => {
+                            hitTestSource = source;
+                        });
+                    });
+                    session.addEventListener('end', () => {
+                        hitTestSourceRequested = false;
+                        hitTestSource = null;
+                    });
+                    hitTestSourceRequested = true;
+                }
 
-    init();
-  </script>
+                if (hitTestSource) {
+                    const hitTestResults = frame.getHitTestResults(hitTestSource);
+                    if (hitTestResults.length) {
+                        const hit = hitTestResults[0];
+                        reticle.visible = true;
+                        reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
+                    } else {
+                        reticle.visible = false;
+                    }
+                }
+            }
+            renderer.render(scene, camera);
+        }
+    </script>
 </body>
 </html>

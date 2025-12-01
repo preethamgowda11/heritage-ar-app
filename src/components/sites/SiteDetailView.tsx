@@ -53,8 +53,6 @@ export function SiteDetailView({ site, launchAR: initialLaunchAR }: SiteDetailVi
 
   useEffect(() => {
     if (initialLaunchAR && modelId) {
-        // We need data to be loaded before redirecting to preserve it
-        // This effect will re-run once optimizedData is available
         if (optimizedData) {
             handleLaunchAR();
         }
