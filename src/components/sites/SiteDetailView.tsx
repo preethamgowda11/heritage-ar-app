@@ -10,7 +10,7 @@ import { optimizeContent, OptimizeContentOutput } from '@/ai/flows/adaptive-cont
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Gem, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, Gem, Image as ImageIcon, View } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SpeechSynthesisPlayer } from '@/components/common/SpeechSynthesisPlayer';
@@ -86,13 +86,13 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         <Button asChild variant="outline" size="sm">
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
-        {fallback360Image && (
-            <Button asChild variant="outline">
-                <a href={fallback360Image.imageUrl} target="_blank" rel="noopener noreferrer">
-                    <ImageIcon className="mr-2 h-4 w-4" />
-                    360 View
-                </a>
-            </Button>
+        {optimizedData.modelUrl && (
+          <Button asChild>
+            <a href={optimizedData.modelUrl} target="_blank" rel="noopener noreferrer">
+              <View className="mr-2 h-4 w-4" />
+              {t('launch_ar')}
+            </a>
+          </Button>
         )}
       </div>
       
@@ -116,6 +116,17 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
       <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
         <p>{optimizedData.longDescription}</p>
       </article>
+
+      {fallback360Image && (
+        <div className="text-center my-6">
+          <Button asChild variant="outline">
+              <a href={fallback360Image.imageUrl} target="_blank" rel="noopener noreferrer">
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  360 View
+              </a>
+          </Button>
+        </div>
+      )}
 
       <div className="my-6">
         <SpeechSynthesisPlayer text={optimizedData.longDescription || ''} />
