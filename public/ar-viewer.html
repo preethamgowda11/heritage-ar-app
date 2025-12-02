@@ -2,149 +2,244 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>AR Camera Viewer - Bharat Heritage</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AR Viewer — Single Model (bottom-center, 180° rotate)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #000;
-    }
-    #camera-feed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-    #ui-controls {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 10;
-      display: flex;
-      gap: 0.5rem;
-    }
-    .ar-button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 0.5rem;
-      cursor: pointer;
-    }
-    .ar-button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    html,body{height:100%;margin:0;background:#000;overflow:hidden;font-family:system-ui,Arial}
+    /* camera behind the AR canvas */
+    #cameraFeed{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:9 !important;display:block;background:#000}
+    /* transparent A-Frame canvas above video */
+    a-scene, a-scene canvas{position:fixed;inset:0;width:100%;height:100%;z-index:10 !important;background:transparent !important}
+    /* UI */
+    #controls{position:fixed;right:12px;top:12px;z-index:2147483647;display:flex;flex-direction:column;gap:8px}
+    .btn{background:rgba(0,0,0,0.6);color:#fff;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14px}
+    #rotateRow{display:flex;gap:8px;align-items:center}
+    #status{position:fixed;left:12px;bottom:12px;z-index:2147483647;background:rgba(0,0,0,0.75);color:#fff;padding:8px 10px;border-radius:8px;font-size:13px;max-width:70%}
+    /* bottom-center hint where model sits */
+    #hint{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:2147483646;color:rgba(255,255,255,0.85);font-size:12px;padding:6px 8px;background:rgba(0,0,0,0.4);border-radius:6px}
   </style>
 </head>
 <body>
+  <!-- Camera -->
+  <video id="cameraFeed" autoplay playsinline muted></video>
 
-  <video id="camera-feed" autoplay playsinline muted></video>
-  
-  <div id="ui-controls">
-    <button id="start-camera" class="ar-button">Start Camera</button>
-    <button id="toggle-bw" class="ar-button" disabled>B/W</button>
+  <!-- Controls -->
+  <div id="controls">
+    <div style="display:flex;gap:8px;">
+      <button id="startBtn" class="btn">Start Camera</button>
+      <button id="placeBtn" class="btn">Place Model</button>
+    </div>
+
+    <div id="rotateRow">
+      <button id="leftBtn" class="btn">⟲ 15°</button>
+      <button id="resetBtn" class="btn">Reset</button>
+      <button id="rightBtn" class="btn">15° ⟳</button>
+    </div>
   </div>
 
-  <a-scene embedded vr-mode-ui="enabled: false" renderer="alpha: true; antialias: true;">
-    <a-entity
-      id="model-entity"
-      gltf-model="/models/stone_chariot_in_hampi.glb"
-      position="0 1 -2"
-      scale="1 1 1"
-      rotation="0 0 0"
-    ></a-entity>
-    
-    <a-camera position="0 1.6 0" wasd-controls-enabled="false"></a-camera>
+  <div id="status">Ready</div>
+  <div id="hint">Model will appear at bottom-center — drag left/right to rotate (180°)</div>
+
+  <!-- A-Frame scene with single active model entity -->
+  <a-scene embedded vr-mode-ui="enabled: false" renderer="alpha: true; antialias: true;" background="color: transparent">
+    <a-entity id="activeModel" visible="false" rotation="0 0 0" position="0 0.6 -1" scale="0.8 0.8 0.8"></a-entity>
+    <a-camera position="0 1.6 0"></a-camera>
   </a-scene>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const cameraFeed = document.getElementById('camera-feed');
-      const startButton = document.getElementById('start-camera');
-      const toggleButton = document.getElementById('toggle-bw');
-      const modelEntity = document.getElementById('model-entity');
+  (function(){
+    // --- CONFIG: map site keys to model filenames (edit to your filenames) ---
+    const modelMap = {
+      tajmahal: '/models/taj_mahal.glb',
+      charminar: '/models/charminar_hyderabad.glb',
+      ellora: '/models/ellora_caves__india.glb',
+      sanchi: '/models/great_stupa_in_sanchi.glb',
+      jagannath: '/models/jagannath_puri_temple_model.glb',
+      rani: '/models/rani-ki-vav.glb'
+      // add keys -> paths as needed
+    };
 
-      let isGrayscale = false;
-      let modelReady = false;
+    // --- Helpers ---
+    const qs = new URLSearchParams(location.search);
+    const siteKey = (qs.get('site') || '').toLowerCase();
+    const modelPath = modelMap[siteKey] || null;
 
-      modelEntity.addEventListener('model-loaded', () => {
-        modelReady = true;
-        toggleButton.disabled = false;
-      });
+    const statusEl = document.getElementById('status');
+    const startBtn = document.getElementById('startBtn');
+    const placeBtn = document.getElementById('placeBtn');
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const active = document.getElementById('activeModel');
 
-      startButton.addEventListener('click', async () => {
-        startButton.textContent = 'Starting...';
-        startButton.disabled = true;
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-          });
-          cameraFeed.srcObject = stream;
-          await cameraFeed.play();
-          startButton.style.display = 'none';
-        } catch (err) {
-          console.error('Camera access failed:', err);
-          alert('Could not access camera. Please ensure permissions are granted.');
-          // Fallback to user-facing camera if environment fails
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            cameraFeed.srcObject = stream;
-            await cameraFeed.play();
-            startButton.style.display = 'none';
-          } catch (fallbackErr) {
-            console.error('Fallback camera access failed:', fallbackErr);
-            alert('No available camera found.');
-            startButton.textContent = 'Start Camera';
-            startButton.disabled = false;
-          }
-        }
-      });
-      
-      const setModelGrayscale = (enable) => {
-        const mesh = modelEntity.getObject3D('mesh');
-        if (!mesh) return;
+    function setStatus(t, ok=false){
+      statusEl.innerText = t;
+      statusEl.style.border = ok ? '2px solid #4caf50' : '';
+    }
 
-        mesh.traverse((node) => {
-          if (node.isMesh && node.material) {
-            const materials = Array.isArray(node.material) ? node.material : [node.material];
-            materials.forEach(material => {
-              if (!material.userData.original) {
-                material.userData.original = {
-                  map: material.map,
-                  color: material.color.clone()
-                };
-              }
-              if (enable) {
-                material.map = null;
-                material.color.set('gray');
-              } else {
-                material.map = material.userData.original.map;
-                material.color.copy(material.userData.original.color);
-              }
-              material.needsUpdate = true;
-            });
-          }
-        });
-      };
+    if (!modelPath) {
+      setStatus('No site specified or mapping missing. Use ?site=tajmahal (edit modelMap if needed).');
+    }
 
-      toggleButton.addEventListener('click', () => {
-        if (!modelReady) return;
-        isGrayscale = !isGrayscale;
-        setModelGrayscale(isGrayscale);
-        toggleButton.textContent = isGrayscale ? 'Color' : 'B/W';
-      });
+    // --- Camera start ---
+    async function startCamera(){
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } } });
+        const v = document.getElementById('cameraFeed');
+        v.srcObject = stream;
+        try { await v.play(); } catch(e){}
+        setStatus('Camera OK — ' + (stream.getVideoTracks()[0]?.label||'camera'), true);
+        return true;
+      } catch (e) {
+        console.error(e);
+        setStatus('Camera error: ' + (e.name || e.message));
+        return false;
+      }
+    }
+
+    startBtn.addEventListener('click', async () => {
+      startBtn.disabled = true;
+      await startCamera();
     });
-  </script>
 
+    // auto-start camera if we want
+    //startCamera();
+
+    // --- Load single model for the given site ---
+    function placeModel(){
+      if (!modelPath) {
+        setStatus('No model path for this site. Edit modelMap.', false);
+        return;
+      }
+      setStatus('Loading model: ' + modelPath + ' ...');
+      active.setAttribute('visible', 'false');
+      // set model path (only this model is loaded)
+      active.setAttribute('gltf-model', modelPath);
+      // position bottom-center; tweak Y/Z/scale per-model by modelMap overrides if needed
+      active.setAttribute('position', '0 0.6 -1'); // bottom-center
+      active.setAttribute('scale', '0.8 0.8 0.8');
+
+      // model events
+      active.addEventListener('model-loaded', onModelLoaded, { once: true });
+      active.addEventListener('model-error', (evt) => {
+        console.error('Model error', evt);
+        setStatus('Model load failed: ' + modelPath);
+      }, { once: true });
+    }
+
+    function onModelLoaded(){
+      active.setAttribute('visible', 'true');
+      // clamp initial rotation to 0
+      active.object3D.rotation.y = 0;
+      setStatus('Model loaded — drag left/right to rotate (±90°).', true);
+    }
+
+    placeBtn.addEventListener('click', placeModel);
+
+    // If user opens page with site param, auto place model once camera ready
+    if (modelPath){
+      // try auto-place after camera ready or when user clicks start
+      // we'll call placeModel once camera is OK; simple approach: attempt camera immediately
+      startCamera().then(ok => { if (ok) placeModel(); else setStatus('Start camera first then press Place Model.'); });
+    }
+
+    // ---- Rotation controls (drag + buttons) ----
+    // We'll rotate only around Y axis and clamp to [-PI/2, PI/2] (~ ±90°)
+    const minY = -Math.PI/2;
+    const maxY = Math.PI/2;
+
+    function clampY(rad){ return Math.max(minY, Math.min(maxY, rad)); }
+
+    // Buttons rotate by 15 degrees (in radians)
+    const step = (15 * Math.PI) / 180;
+
+    leftBtn.addEventListener('click', () => {
+      const o = active.object3D;
+      o.rotation.y = clampY(o.rotation.y - step);
+      applyRotationToEntity(o.rotation.y);
+    });
+    rightBtn.addEventListener('click', () => {
+      const o = active.object3D;
+      o.rotation.y = clampY(o.rotation.y + step);
+      applyRotationToEntity(o.rotation.y);
+    });
+    resetBtn.addEventListener('click', () => {
+      const o = active.object3D;
+      o.rotation.y = 0;
+      applyRotationToEntity(0);
+    });
+
+    function applyRotationToEntity(yRad){
+      // set degrees for debugging
+      const deg = Math.round((yRad * 180) / Math.PI);
+      setStatus('Rotation: ' + deg + '°', true);
+      // ensure the A-Frame entity rotation attribute matches (in degrees)
+      active.setAttribute('rotation', `0 ${deg} 0`);
+    }
+
+    // Drag-to-rotate (touch/mouse)
+    let dragging = false;
+    let startX = 0;
+    let startYaw = 0;
+
+    function pointerDown(x){
+      if (!active.object3D) return;
+      dragging = true;
+      startX = x;
+      startYaw = active.object3D.rotation.y || 0;
+    }
+    function pointerMove(x){
+      if (!dragging) return;
+      const dx = x - startX;
+      // sensitivity (pixels -> radians)
+      const sens = 0.0075; // tweak: larger = faster rotate
+      const newYaw = clampY(startYaw + dx * sens);
+      active.object3D.rotation.y = newYaw;
+      applyRotationToEntity(newYaw);
+    }
+    function pointerUp(){
+      dragging = false;
+    }
+
+    // mouse
+    window.addEventListener('mousedown', (ev) => pointerDown(ev.clientX));
+    window.addEventListener('mousemove', (ev) => pointerMove(ev.clientX));
+    window.addEventListener('mouseup', pointerUp);
+    // touch
+    window.addEventListener('touchstart', (ev) => {
+      if (ev.touches && ev.touches.length) pointerDown(ev.touches[0].clientX);
+    }, {passive:true});
+    window.addEventListener('touchmove', (ev) => {
+      if (ev.touches && ev.touches.length) pointerMove(ev.touches[0].clientX);
+    }, {passive:true});
+    window.addEventListener('touchend', pointerUp);
+
+    // expose hook for AR anchor (if you want to trigger placement when anchor found)
+    window.AH_onARStart = function(anchorId, metadata){
+      // metadata.siteKey could be passed — if different than current, reload new model
+      if (metadata && metadata.site && modelMap[metadata.site]) {
+        // optional: change modelPath and call placeModel()
+      }
+      // show model if not visible
+      if (!active.getAttribute('visible')) active.setAttribute('visible','true');
+      setStatus('AR anchor found: ' + anchorId, true);
+    };
+
+    // small improvement: double-tap to reset rotation
+    let lastTap = 0;
+    window.addEventListener('touchend', (e) => {
+      const t = Date.now();
+      if (t - lastTap < 300) { // double-tap
+        active.object3D.rotation.y = 0;
+        applyRotationToEntity(0);
+      }
+      lastTap = t;
+    });
+
+    // clean-up: ensure entity exists
+    if (!active) setStatus('Active model entity missing in page.');
+  })();
+  </script>
 </body>
 </html>
