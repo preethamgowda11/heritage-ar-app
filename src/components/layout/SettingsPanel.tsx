@@ -62,6 +62,7 @@ export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
                 <SelectItem value="en">{t('english')}</SelectItem>
                 <SelectItem value="hi">{t('hindi')}</SelectItem>
                 <SelectItem value="kn">{t('kannada')}</SelectItem>
+                <SelectItem value="or">{t('odia')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

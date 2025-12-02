@@ -1,4 +1,4 @@
-export type Language = 'en' | 'hi' | 'kn';
+export type Language = 'en' | 'hi' | 'kn' | 'or';
 
 export interface Site {
   id: string;
