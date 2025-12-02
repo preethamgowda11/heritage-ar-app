@@ -6,7 +6,7 @@ import type { Artifact } from '@/types';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Volume2 } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -24,11 +24,19 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
   // In low bandwidth mode, we don't show the model.
   const modelUrl = isLowBandwidth ? null : artifact.modelFileUrl;
 
+  const handleReadDescription = () => {
+    // TTS integration will be added here.
+    console.log('Reading description:', description);
+  };
+
   return (
     <div className="container max-w-4xl mx-auto p-4 md:p-8">
-      <div className="mb-6 flex justify-between items-center">
+      <div className="detail-page-controls mb-6 flex justify-between items-center gap-2">
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
+        </Button>
+        <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
+          <Volume2 className="mr-2 h-4 w-4" /> {t('read_description_aloud')}
         </Button>
       </div>
 
@@ -45,7 +53,7 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
       </header>
       
       <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
-        <p>{description}</p>
+        <p className="detail-description">{description}</p>
       </article>
     </div>
   );

@@ -7,7 +7,7 @@ import type { Site } from '@/types';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, View, ImageIcon } from 'lucide-react';
+import { ArrowLeft, View, ImageIcon, Volume2 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -28,20 +28,30 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
   const fallback360Image = PlaceHolderImages.find(p => p.id === site.fallback360UrlId);
   const arUrl = `/ar-viewer.html?model=${encodeURIComponent(modelUrl || '')}`;
 
+  const handleReadDescription = () => {
+    // TTS integration will be added here.
+    console.log('Reading description:', longDescription);
+  };
+
   return (
     <div className="container max-w-5xl mx-auto p-4 md:p-8">
-      <div className="mb-6 flex justify-between items-center">
+      <div className="detail-page-controls mb-6 flex justify-between items-center gap-2">
         <Button asChild variant="outline" size="sm">
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
-        {modelUrl && (
-          <Button asChild>
-            <a href={arUrl}>
-              <View className="mr-2 h-4 w-4" />
-              {t('launch_ar')}
-            </a>
+        <div className="flex items-center gap-2">
+          <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
+            <Volume2 className="mr-2 h-4 w-4" /> {t('read_description_aloud')}
           </Button>
-        )}
+          {modelUrl && (
+            <Button asChild>
+              <a href={arUrl}>
+                <View className="mr-2 h-4 w-4" />
+                {t('launch_ar')}
+              </a>
+            </Button>
+          )}
+        </div>
       </div>
       
       {coverImage && (
@@ -62,7 +72,7 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
       </header>
       
       <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
-        <p>{longDescription}</p>
+        <p className="detail-description">{longDescription}</p>
       </article>
 
       {fallback360Image && (

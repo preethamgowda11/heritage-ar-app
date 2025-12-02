@@ -97,9 +97,9 @@ const dictionary: Record<string, Record<Language, string>> = {
     'kn': 'ಸಂಬಂಧಿತ ಕಲಾಕೃತಿಗಳು',
   },
   'read_description_aloud': {
-    'en': 'Read description aloud',
-    'hi': 'विवरण जोर से पढ़ें',
-    'kn': 'ವಿವರಣೆಯನ್ನು ಗಟ್ಟಿಯಾಗಿ ಓದಿ',
+    'en': 'Read Aloud',
+    'hi': 'जोर से पढ़ें',
+    'kn': 'ಗಟ್ಟಿಯಾಗಿ ಓದಿ',
   },
 
   // Panels
