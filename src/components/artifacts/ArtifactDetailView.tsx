@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import type { Artifact } from '@/types';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Volume2 } from 'lucide-react';
+import { ArrowLeft, Volume2, Pause, Play } from 'lucide-react';
 import { ModelViewer } from '@/components/common/ModelViewer';
 import { useTranslation } from '@/hooks/use-translation';
+import { useTts } from '@/hooks/use-tts';
 
 interface ArtifactDetailViewProps {
   artifact: Artifact;
@@ -17,16 +16,19 @@ interface ArtifactDetailViewProps {
 export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
   const { isLowBandwidth } = useUserPreferences();
   const { t, language } = useTranslation();
+  const { speak, stop, isSpeaking, isPaused } = useTts();
 
   const title = artifact.title[language];
   const description = artifact.description[language];
   
-  // In low bandwidth mode, we don't show the model.
   const modelUrl = isLowBandwidth ? null : artifact.modelFileUrl;
 
   const handleReadDescription = () => {
-    // TTS integration will be added here.
-    console.log('Reading description:', description);
+    if (isSpeaking) {
+      stop();
+    } else {
+      speak(description, language);
+    }
   };
 
   return (
@@ -36,7 +38,8 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
         <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
-          <Volume2 className="mr-2 h-4 w-4" /> {t('read_description_aloud')}
+          {isSpeaking && !isPaused ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
+          {isSpeaking && !isPaused ? 'Stop' : t('read_description_aloud')}
         </Button>
       </div>
 

@@ -1,15 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Site } from '@/types';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, View, ImageIcon, Volume2 } from 'lucide-react';
+import { ArrowLeft, View, ImageIcon, Volume2, Play, Pause } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
+import { useTts } from '@/hooks/use-tts';
 
 interface SiteDetailViewProps {
   site: Site;
@@ -18,6 +18,7 @@ interface SiteDetailViewProps {
 export function SiteDetailView({ site }: SiteDetailViewProps) {
   const { isLowBandwidth } = useUserPreferences();
   const { t, language } = useTranslation();
+  const { speak, stop, isSpeaking, isPaused } = useTts();
 
   const title = site.title[language];
   const longDescription = site.longDescription[language];
@@ -29,8 +30,11 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
   const arUrl = `/ar-viewer.html?model=${encodeURIComponent(modelUrl || '')}`;
 
   const handleReadDescription = () => {
-    // TTS integration will be added here.
-    console.log('Reading description:', longDescription);
+    if (isSpeaking) {
+      stop();
+    } else {
+      speak(longDescription, language);
+    }
   };
 
   return (
@@ -41,7 +45,8 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         </Button>
         <div className="flex items-center gap-2">
           <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
-            <Volume2 className="mr-2 h-4 w-4" /> {t('read_description_aloud')}
+            {isSpeaking && !isPaused ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
+            {isSpeaking && !isPaused ? 'Stop' : t('read_description_aloud')}
           </Button>
           {modelUrl && (
             <Button asChild>
