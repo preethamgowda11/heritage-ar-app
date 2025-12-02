@@ -30,4 +30,7 @@ export interface UserPreferences {
   theme: 'light' | 'dark' | 'system';
   fontSize: number;
   language: Language;
+  isBionicReading: boolean;
+  isDyslexiaFont: boolean;
+  isReduceMotion: boolean;
 }

@@ -10,6 +10,9 @@ interface UserPreferencesContextType extends UserPreferences {
   setTheme: (theme: 'light' | 'dark' | 'system') => void;
   setFontSize: (size: number) => void;
   setLanguage: (language: Language) => void;
+  setIsBionicReading: (value: boolean) => void;
+  setIsDyslexiaFont: (value: boolean) => void;
+  setIsReduceMotion: (value: boolean) => void;
 }
 
 const defaultPreferences: UserPreferences = {
@@ -19,6 +22,9 @@ const defaultPreferences: UserPreferences = {
   theme: 'system',
   fontSize: 16,
   language: 'en',
+  isBionicReading: false,
+  isDyslexiaFont: false,
+  isReduceMotion: false,
 };
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -94,6 +100,11 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
 
   const setIsAudioOn = (value: boolean) => savePreferences({ ...prefs, isAudioOn: value });
 
+  const setIsBionicReading = (value: boolean) => savePreferences({ ...prefs, isBionicReading: value });
+  const setIsDyslexiaFont = (value: boolean) => savePreferences({ ...prefs, isDyslexiaFont: value });
+  const setIsReduceMotion = (value: boolean) => savePreferences({ ...prefs, isReduceMotion: value });
+
+
   if (!isInitialized) {
     return null; // Or a loading spinner
   }
@@ -108,6 +119,9 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
         setIsLowBandwidth,
         setIsAccessibilityOn,
         setIsAudioOn,
+        setIsBionicReading,
+        setIsDyslexiaFont,
+        setIsReduceMotion,
       }}
     >
       {children}

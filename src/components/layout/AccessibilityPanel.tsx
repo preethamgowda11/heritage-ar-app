@@ -27,7 +27,13 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
     fontSize,
     setFontSize,
     theme,
-    setTheme
+    setTheme,
+    isBionicReading,
+    setIsBionicReading,
+    isDyslexiaFont,
+    setIsDyslexiaFont,
+    isReduceMotion,
+    setIsReduceMotion,
   } = useUserPreferences();
   const { t } = useTranslation();
 
@@ -73,6 +79,7 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
               step={1}
               value={[fontSize]}
               onValueChange={(value) => setFontSize(value[0])}
+              disabled={!isAccessibilityOn}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -83,6 +90,40 @@ export function AccessibilityPanel({ open, onOpenChange }: AccessibilityPanelPro
               id="contrast-mode"
               checked={theme === 'dark'}
               onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+              disabled={!isAccessibilityOn}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="bionic-reading" className="text-base">
+              Bionic Reading
+            </Label>
+            <Switch
+              id="bionic-reading"
+              checked={isBionicReading}
+              onCheckedChange={setIsBionicReading}
+              disabled={!isAccessibilityOn}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="dyslexia-font" className="text-base">
+              Dyslexia Friendly Font
+            </Label>
+            <Switch
+              id="dyslexia-font"
+              checked={isDyslexiaFont}
+              onCheckedChange={setIsDyslexiaFont}
+              disabled={!isAccessibilityOn}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="reduce-motion" className="text-base">
+              Reduce Motion
+            </Label>
+            <Switch
+              id="reduce-motion"
+              checked={isReduceMotion}
+              onCheckedChange={setIsReduceMotion}
+              disabled={!isAccessibilityOn}
             />
           </div>
         </div>
