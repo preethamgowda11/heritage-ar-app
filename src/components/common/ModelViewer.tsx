@@ -12,19 +12,20 @@ interface ModelViewerProps {
 }
 
 export function ModelViewer({ src, iosSrc, alt, posterId, ar = false }: ModelViewerProps) {
-  const { theme } = useUserPreferences();
+  const { theme, isReduceMotion } = useUserPreferences();
   const posterImage = posterId ? PlaceHolderImages.find(p => p.id === posterId)?.imageUrl : undefined;
 
   return (
     <div className="w-full h-96 rounded-lg overflow-hidden border bg-gray-200 dark:bg-gray-800">
       <model-viewer
+        id="model-viewer-instance"
         src={src}
         ios-src={iosSrc}
         alt={alt}
         ar={ar}
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
-        auto-rotate
+        auto-rotate={!isReduceMotion}
         poster={posterImage}
         shadow-intensity="1"
         environment-image={theme === 'dark' ? 'neutral' : 'legacy'}

@@ -2,14 +2,16 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import type { Site } from '@/types';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, View, ImageIcon, Volume2, Play, Pause } from 'lucide-react';
+import { ArrowLeft, View, ImageIcon, Volume2, Play, Pause, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
 import { useTts } from '@/hooks/use-tts';
+import { ModelViewer } from '@/components/common/ModelViewer';
 
 interface SiteDetailViewProps {
   site: Site;
@@ -19,6 +21,7 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
   const { isLowBandwidth, isAudioOn } = useUserPreferences();
   const { t, language } = useTranslation();
   const { speak, stop, isSpeaking } = useTts();
+  const [show3DModel, setShow3DModel] = useState(false);
 
   const title = site.title[language];
   const longDescription = site.longDescription[language];
@@ -35,6 +38,10 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
     } else {
       speak(longDescription, language);
     }
+  };
+  
+  const handleToggle3DModel = () => {
+    setShow3DModel(!show3DModel);
   };
 
   return (
@@ -66,8 +73,11 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
         </div>
       </div>
       
-      {coverImage && (
-         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg bg-muted">
+      <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-lg bg-muted">
+        {show3DModel && modelUrl ? (
+          <ModelViewer src={modelUrl} alt={`3D model of ${title}`} posterId={site.coverImageUrlId} ar={false} />
+        ) : (
+          coverImage && (
             <Image 
               src={coverImage.imageUrl} 
               alt={`Cover image of ${title}`} 
@@ -76,8 +86,35 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
               data-ai-hint={coverImage.imageHint}
               priority
             />
-         </div>
-      )}
+          )
+        )}
+      </div>
+
+      <div className="text-center my-6 flex justify-center gap-4">
+        {modelUrl && (
+          <Button variant="outline" onClick={handleToggle3DModel}>
+            {show3DModel ? (
+              <>
+                <XCircle className="mr-2 h-4 w-4" />
+                Cancel View
+              </>
+            ) : (
+              <>
+                <View className="mr-2 h-4 w-4" />
+                {t('show_3d_model')}
+              </>
+            )}
+          </Button>
+        )}
+        {fallback360Image && (
+          <Button asChild variant="outline">
+              <a href={fallback360Image.imageUrl} target="_blank" rel="noopener noreferrer">
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  360 View
+              </a>
+          </Button>
+        )}
+      </div>
       
       <header className="mb-6 text-center">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">{title}</h1>
@@ -86,17 +123,6 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
       <article className="prose prose-lg max-w-none mx-auto text-foreground/90 mb-6">
         <p className="detail-description">{longDescription}</p>
       </article>
-
-      {fallback360Image && (
-        <div className="text-center my-6">
-          <Button asChild variant="outline">
-              <a href={fallback360Image.imageUrl} target="_blank" rel="noopener noreferrer">
-                  <ImageIcon className="mr-2 h-4 w-4" />
-                  360 View
-              </a>
-          </Button>
-        </div>
-      )}
       
       {site.artifacts.length > 0 && (
         <div className="mt-12">
