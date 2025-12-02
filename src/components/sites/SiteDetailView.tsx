@@ -16,9 +16,9 @@ interface SiteDetailViewProps {
 }
 
 export function SiteDetailView({ site }: SiteDetailViewProps) {
-  const { isLowBandwidth } = useUserPreferences();
+  const { isLowBandwidth, isAudioOn } = useUserPreferences();
   const { t, language } = useTranslation();
-  const { speak, stop, isSpeaking, isPaused } = useTts();
+  const { speak, stop, isSpeaking } = useTts();
 
   const title = site.title[language];
   const longDescription = site.longDescription[language];
@@ -44,13 +44,20 @@ export function SiteDetailView({ site }: SiteDetailViewProps) {
             <Link href="/sites"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_sites')}</Link>
         </Button>
         <div className="flex items-center gap-2">
-          <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
-            {isSpeaking && !isPaused ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
-            {isSpeaking && !isPaused ? 'Stop' : t('read_description_aloud')}
+          <Button 
+            id="read-description-btn" 
+            variant="outline" 
+            size="sm" 
+            onClick={handleReadDescription} 
+            aria-label={t('read_description_aloud')}
+            disabled={!isAudioOn}
+          >
+            {isSpeaking ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
+            {isSpeaking ? 'Stop' : t('read_description_aloud')}
           </Button>
           {modelUrl && (
             <Button asChild>
-              <a href={arUrl}>
+              <a href={arUrl} target="_blank" rel="noopener noreferrer">
                 <View className="mr-2 h-4 w-4" />
                 {t('launch_ar')}
               </a>

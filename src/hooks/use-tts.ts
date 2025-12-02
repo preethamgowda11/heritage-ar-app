@@ -37,7 +37,6 @@ const TTS_CONFIG = {
 export function useTts() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const { toast } = useToast();
 
   const populateVoiceList = useCallback(() => {
@@ -58,7 +57,6 @@ export function useTts() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
-      setIsPaused(false);
     }
   }, []);
 
@@ -113,28 +111,15 @@ export function useTts() {
 
       utterance.onstart = () => {
         setIsSpeaking(true);
-        setIsPaused(false);
         toast({ title: TTS_CONFIG.uiText.speaking });
-      };
-
-      utterance.onpause = () => {
-        setIsPaused(true);
-        toast({ title: TTS_CONFIG.uiText.paused });
-      };
-
-      utterance.onresume = () => {
-        setIsPaused(false);
-        toast({ title: TTS_CONFIG.uiText.resumed });
       };
 
       utterance.onend = () => {
         setIsSpeaking(false);
-        setIsPaused(false);
       };
 
       utterance.onerror = (event) => {
         setIsSpeaking(false);
-        setIsPaused(false);
         console.error('SpeechSynthesis Error', event);
         toast({ variant: 'destructive', title: TTS_CONFIG.uiText.error, description: event.error });
       };
@@ -144,5 +129,5 @@ export function useTts() {
     [voices, stop, toast]
   );
   
-  return { speak, stop, isSpeaking, isPaused };
+  return { speak, stop, isSpeaking };
 }

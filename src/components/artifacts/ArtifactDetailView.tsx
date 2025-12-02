@@ -14,9 +14,9 @@ interface ArtifactDetailViewProps {
 }
 
 export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
-  const { isLowBandwidth } = useUserPreferences();
+  const { isLowBandwidth, isAudioOn } = useUserPreferences();
   const { t, language } = useTranslation();
-  const { speak, stop, isSpeaking, isPaused } = useTts();
+  const { speak, stop, isSpeaking } = useTts();
 
   const title = artifact.title[language];
   const description = artifact.description[language];
@@ -37,9 +37,16 @@ export function ArtifactDetailView({ artifact }: ArtifactDetailViewProps) {
         <Button asChild variant="outline" size="sm">
             <Link href="/artifacts"><ArrowLeft className="mr-2 h-4 w-4" />{t('back_to_all_artifacts')}</Link>
         </Button>
-        <Button id="read-description-btn" variant="outline" size="sm" onClick={handleReadDescription} aria-label={t('read_description_aloud')}>
-          {isSpeaking && !isPaused ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
-          {isSpeaking && !isPaused ? 'Stop' : t('read_description_aloud')}
+        <Button 
+          id="read-description-btn" 
+          variant="outline" 
+          size="sm" 
+          onClick={handleReadDescription} 
+          aria-label={t('read_description_aloud')}
+          disabled={!isAudioOn}
+        >
+          {isSpeaking ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
+          {isSpeaking ? 'Stop' : t('read_description_aloud')}
         </Button>
       </div>
 

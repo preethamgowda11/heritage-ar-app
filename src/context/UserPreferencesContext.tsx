@@ -82,7 +82,16 @@ export const UserPreferencesProvider = ({ children }: { children: ReactNode }) =
   }
 
   const setIsLowBandwidth = (value: boolean) => savePreferences({ ...prefs, isLowBandwidth: value });
-  const setIsAccessibilityOn = (value: boolean) => savePreferences({ ...prefs, isAccessibilityOn: value });
+  
+  const setIsAccessibilityOn = (value: boolean) => {
+    const newPrefs = { ...prefs, isAccessibilityOn: value };
+    // If accessibility is turned off, also turn off audio narration
+    if (!value) {
+      newPrefs.isAudioOn = false;
+    }
+    savePreferences(newPrefs);
+  };
+
   const setIsAudioOn = (value: boolean) => savePreferences({ ...prefs, isAudioOn: value });
 
   if (!isInitialized) {
